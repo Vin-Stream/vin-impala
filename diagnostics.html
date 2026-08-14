@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Impala Streamer Diagnostics</title>
+  <link rel="stylesheet" href="styles.css?v=ui-final-20260725a" />
+  <link rel="icon" href="./assets/ddMusic.ico" />
+  <script src="app-config.js"></script>
+  <script src="diagnostics-store.js"></script>
+</head>
+<body class="diagnostics-page">
+  <main class="diagnostics-shell">
+    <header class="diagnostics-header">
+      <div>
+        <p class="eyebrow">Impala Streamer</p>
+        <h1>Diagnostics</h1>
+        <p id="diagnostics-updated" class="diagnostics-updated">Waiting for local player data…</p>
+      </div>
+      <div class="diagnostics-actions">
+        <a href="preferences.html" class="account-link">Settings</a>
+        <a href="index.html" class="account-link">Back to Player</a>
+        <button type="button" id="diagnostics-send" class="account-link">Send Functional Report</button>
+        <button type="button" id="diagnostics-refresh" class="account-link">Refresh</button>
+      </div>
+    </header>
+    <div id="diagnostics-content" class="diagnostics-grid" aria-live="polite"></div>
+  </main>
+  <script src="diagnostics.js"></script>
+</body>
+</html>

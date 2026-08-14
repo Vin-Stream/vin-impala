@@ -1,0 +1,1110 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow, noarchive" />
+    <link rel="stylesheet" href="../styles.css" />
+    <link rel="icon" href="../assets/ddMusic.ico" />
+    <title>User Guide</title>
+
+    <style>
+      :root {
+        --guide-surface: var(--card-bg);
+        --guide-text: var(--theme-text);
+        --guide-muted: var(--muted);
+        --guide-border: var(--card-border);
+      }
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        color: var(--guide-text);
+        font-family: "Trebuchet MS", Arial, sans-serif;
+      }
+
+      .content {
+        max-width: 900px;
+        margin: 2rem auto;
+        padding: 1.75rem;
+        background: var(--guide-surface);
+        border: 1px solid var(--guide-border);
+        border-radius: 24px;
+        line-height: 1.65;
+        box-shadow: 0 30px 90px rgba(0, 0, 0, 0.35);
+      }
+
+      h1 {
+        margin: 0 0 1rem;
+        font-size: 1.8rem;
+        line-height: 1.2;
+        color: #fff4e2;
+      }
+
+      h2 {
+        margin: 1.75rem 0 0.5rem;
+        font-size: 1.2rem;
+        line-height: 1.3;
+        color: #fff4e2;
+        border-top: 2px solid var(--panel-border);
+        padding-top: 1rem;
+      }
+
+      h3 {
+        margin: 1rem 0 0.35rem;
+        font-size: 1rem;
+        color: #fff4e2;
+      }
+
+      p {
+        margin: 0.5rem 0;
+      }
+
+      ul,
+      ol {
+        margin: 0.4rem 0 0.9rem 1.2rem;
+        padding: 0;
+      }
+
+      li {
+        margin: 0.2rem 0;
+      }
+
+      .lead {
+        color: var(--guide-muted);
+        margin-bottom: 1rem;
+      }
+
+      .toc {
+        position: sticky;
+        top: 0.65rem;
+        z-index: 5;
+        background: rgba(105, 109, 125, 0.65);
+        border: 2px solid #d285199c;
+        border-radius: 10px;
+        padding: 0.7rem 0.85rem;
+        margin: 0 0 1rem;
+        backdrop-filter: blur(4px);
+        padding-top: 0.7rem; /* NEW */
+        box-shadow: 0 -10px 0 #12141c; /* NEW */
+      }
+
+      .toc-title {
+        margin: 0 0 0.45rem;
+        font-size: 0.85rem;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: var(--guide-muted);
+      }
+
+      .toc-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.45rem 0.7rem;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        font-size: 0.92rem;
+      }
+
+      .toc a {
+        color: var(--theme-text);
+        text-decoration: none;
+        border-bottom: 1px solid transparent;
+      }
+
+      .toc a:hover {
+        border-bottom-color: var(--accent);
+      }
+
+      :target {
+        scroll-margin-top: 20vh;
+      }
+
+      .note {
+        background: var(--panel-bg);
+        border: 1px solid var(--panel-border);
+        border-radius: 8px;
+        padding: 0.75rem;
+        margin: 0.75rem 0;
+      }
+
+      .guide-top-links {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        margin-bottom: 0.9rem;
+      }
+
+      .guide-top-links a {
+        color: var(--theme-text);
+        text-decoration: none;
+        padding: 0.62rem 0.78rem;
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.06);
+      }
+
+      .guide-top-links a:hover,
+      .guide-top-links a:focus-visible {
+        border-color: rgba(255, 195, 111, 0.35);
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      @media (max-width: 640px) {
+        .content {
+          margin: 1rem;
+          padding: 1rem;
+          border-radius: 10px;
+        }
+      }
+
+      .noBullet {
+        list-style-type: none;
+      }
+      .secondLevel {
+        margin-left: 1.5rem;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="page-shell song-list-page-shell">
+      <div class="page-orb page-orb-left"></div>
+      <div class="page-orb page-orb-right"></div>
+
+      <main class="content">
+        <div id="pagetop"></div>
+
+        <div class="guide-top-links">
+          <a href="../index.html">Back to Player</a>
+          <a href="../preferences.html">Settings</a>
+        </div>
+
+        <h1>Impala Streamer User Guide</h1>
+        <p class="lead">Quick help for everyday listening and playlists.</p>
+
+        <nav class="toc" aria-label="Table of contents">
+          <p class="toc-title">Quick Navigation</p>
+          <ul class="toc-links">
+            <li><a href="#features">Features</a></li>
+            <li><a href="#signIn">Sign In</a></li>
+            <li><a href="#playMusic">Play Music</a></li>
+            <li><a href="#playVideos">Play Videos</a></li>
+            <li><a href="#webcast">Webcast</a></li>
+            <li><a href="#syncplay">Sync Play</a></li>
+            <li><a href="#coast">Coast to Coast</a></li>
+            <li><a href="#repeat-shuffle">Repeat and Shuffle</a></li>
+            <li><a href="#makePlaylist">Save Favorites (Starred)</a></li>
+            <li><a href="#managePlaylists">Manage Playlists</a></li>
+            <li><a href="#localLibrary">Local Library</a></li>
+            <li><a href="#addSongs">Add Songs from Library</a></li>
+            <li><a href="#userPreferences">Settings</a></li>
+            <li><a href="#localJsonGuide">Local Library JSON</a></li>
+            <li><a href="#advancedSettings">Advanced Settings</a></li>
+            <li><a href="#quickFixes">Quick Fixes</a></li>
+            <li><a href="#shortcuts">Keyboard Shortcuts</a></li>
+            <li><a href="#manageProfile">Managing your Profile</a></li>
+            <li><a href="#manageLibrary">Managing your Media Libraries</a></li>
+            <li><a href="#pagebottom">Diagnostics</a></li>
+          </ul>
+        </nav>
+
+        <div id="features"></div>
+
+        <h2 class="sec-features">Features</h2>
+        <p>
+          <strong
+            >Impala Core stays stable; major capabilities are added through
+            microservices and parallel applications.</strong
+          >
+        </p>
+
+        <ul>
+          <li>
+            Private, user-owned cloud media library playback via signed URLs.
+          </li>
+          <li>Local Library Companion for local music/video folders.</li>
+          <li>Custom playlists saved in your browser cache on this device.</li>
+          <li>
+            Playlist import/export for sharing with users on the same library.
+          </li>
+          <li>Starred-track staging for quick playlist building.</li>
+          <li>
+            Audio and video playback with resume support (browser-local only).
+          </li>
+          <li>Optional live stream mode.</li>
+          <li>Backup and restore for browser-local Impala data.</li>
+          <li>Instance-specific configuration for separate deployments.</li>
+        </ul>
+
+        <p class="note">
+          Impala does not store user identity or credentials. It only plays from
+          locations you explicitly configure and permit.
+        </p>
+
+        <!-- Sign In -->
+
+        <div id="signIn"></div>
+
+        <h2 class="sec-signIn">Sign In</h2>
+        <p>
+          <strong
+            >Summary: sign in to your own deployment when prompted.</strong
+          >
+        </p>
+        <ol>
+          <li>Open Impala Streamer in your browser.</li>
+          <li>
+            If you are sent to the sign-in page, enter the username and password
+            provided for your deployment.
+          </li>
+          <li>
+            After sign-in, you are redirected to the player automatically.
+          </li>
+        </ol>
+
+        <p class="note">
+          Sign-in is for your hosting environment (for example, your S4-backed
+          library), not for an Impala account. Impala itself does not store your
+          login.
+        </p>
+
+        <p>If sign-in fails:</p>
+        <ol>
+          <li>Re-check spelling (password is case-sensitive).</li>
+          <li>Try again once.</li>
+          <li>
+            If it still fails, ask your admin to reset or verify your registered
+            user.
+          </li>
+        </ol>
+
+        <!-- Playing Music -->
+        <div id="playMusic"></div>
+        <h2 class="sec-playMusic">Playing Music</h2>
+        <p>
+          <strong
+            >Summary: pick a playlist, choose a track, then press Play.</strong
+          >
+        </p>
+        <ol>
+          <li>In Source, choose the playlist you want.</li>
+          <li>Click any song in the Tracks list.</li>
+          <li>Use Play, Pause, Next, and Prev to control playback.</li>
+        </ol>
+
+        <p>
+          <strong
+            >Tip: the source badge shows where media came from: L = local, C =
+            cloud.</strong
+          >
+        </p>
+
+        <h3>iPhone, Bluetooth, and CarPlay Now Playing</h3>
+        <p>
+          On supported iPhones, Impala sends the current title, artist, album or
+          playlist, playback position, and Impala music logo to the system Now
+          Playing display. Vehicle and accessory controls can play, pause, move
+          to the previous title, or move to the next title.
+        </p>
+        <p class="note">
+          If a phone call interrupts playback, Impala retains the title and
+          position. When Impala becomes active again, it republishes its Now
+          Playing identity. If iOS has handed audio to another app, choose
+          <strong>Resume Impala</strong> once to reclaim playback.
+          A dedicated Impala icon on the CarPlay home screen requires a future
+          native iOS app and Apple's CarPlay approval.
+        </p>
+
+        <!-- Playing Videos -->
+        <div id="playVideos"></div>
+        <h2 class="sec-playVideos">Playing Videos</h2>
+        <p>
+          <strong
+            >Summary: select video from the library and click on the title to
+            begin play immediately, or add videos to a playlist so you can play
+            continuously.</strong
+          >
+        </p>
+        <ol>
+          <li>Notice all videos are added to the video queue.</li>
+          <li>Click any video in the Tracks list.</li>
+          <li>Use Play, Pause, Next, and Prev to control playback.</li>
+        </ol>
+
+        <h2 id="videoLibrary" class="sec-videoLibrary">Video Library</h2>
+        <p>
+          <strong
+            >Use browser-friendly video formats such as .mp4, .m4v, .webm, or
+            .mov. Convert .mkv files to .mp4 before indexing.</strong
+          >
+        </p>
+
+        <p><strong>Video Library Folder Structure</strong></p>
+
+        <p>Standalone movie:</p>
+        <ol class="no-bullets">
+          <li>Movie Title/</li>
+          <li class="indent">Movie Title.mp4</li>
+        </ol>
+
+        <p>Movie collection:</p>
+        <ol class="no-bullets">
+          <li>Collection Title/</li>
+          <li class="indent">Movie Title/</li>
+          <li class="indent2">Movie Title.mp4</li>
+          <li class="indent">Movie Title 2/</li>
+          <li class="indent2">Movie Title 2.mp4</li>
+        </ol>
+
+        <p>TV series:</p>
+        <ol class="no-bullets">
+          <li>Series Title/</li>
+          <li class="indent">Season 1/</li>
+          <li class="indent2">Episode 1.mp4</li>
+          <li class="indent2">Episode 2.mp4</li>
+          <li class="indent">Season 2/</li>
+          <li class="indent2">Episode 1.mp4</li>
+          <li class="indent2">Episode 2.mp4</li>
+        </ol>
+
+        <!-- Webcast -->
+        <div id="webcast"></div>
+        <h2 class="sec-webcast">Webcast or Live Stream</h2>
+        <p>
+          <strong
+            >Summary: you can watch or listen to live stream or webcast
+            content.</strong
+          >
+        </p>
+        <ol>
+          <li>First, activate live stream in Settings.</li>
+          <li>
+            Returning back to the player, the button Live Stream will be
+            available; clicking this will allow you to choose your stream.
+          </li>
+          <li>
+            In the live stream screen, after picking your stream, click Begin
+            Session.
+          </li>
+          <li>Returning to the player, click Play to initiate viewing.</li>
+          <li>
+            To switch streams, end your current streaming session, then choose a
+            new stream and begin a new session.
+          </li>
+          <li>
+            In the live stream screen, after picking your stream, click Start
+            Session.
+          </li>
+        </ol>
+
+        <!-- Sync Play -->
+        <div id="syncplay"></div>
+        <h2 class="sec-syncplay">Sync Play</h2>
+        <p><strong>Summary: watch videos in sync with others.</strong></p>
+        <ol>
+          <li>First, activate Sync Play in Settings.</li>
+          <li>
+            Confirm there is a Sync Play service URL populated beneath the tick.
+            This is the link to the microservice Impala will use for this
+            feature.
+          </li>
+          <li>Click "Apply Sync Play Settings".</li>
+          <li>
+            Returning back to the player, you will see a new panel labeled
+            "Collaboration"; expose the controls by clicking Open Controls.
+          </li>
+          <li>There are two modes: Master or Shared.</li>
+          <li>
+            Master locks in as the controller for all other attached
+            participants. Only when Play, Pause, Shuttle is engaged by the
+            Master player will the actions be reflected for all participants.
+          </li>
+          <li>
+            Shared mode allows any of the participants to engage Play, Pause,
+            Shuttle or Stop.
+          </li>
+          <li>
+            Once you have selected the video for the session, and it is loaded
+            in the player, you can create your session.
+          </li>
+          <li>
+            Click "Create Session" to begin; once initiated, you will be
+            presented with a join code. Click "Copy Join Code" and share this
+            with those you would like to invite.
+          </li>
+          <li>
+            When you are ready, and your participants are present, just click
+            Play and control the presentation as needed.
+          </li>
+          <li>
+            Requirements:
+            <ul>
+              <li>All participants must have the Sync Play feature enabled.</li>
+              <li>
+                All participants must be on the same cloud library with
+                independent access to the files.
+              </li>
+              <li>Stable internet connection for all participants.</li>
+            </ul>
+          </li>
+          <li>When finished, simply click "Leave Session".</li>
+          <li>
+            When the user in the Master position leaves, the session is ended
+            for all participants.
+          </li>
+          <li>Returning to the player, click Play to initiate viewing.</li>
+          <li>
+            To switch sessions, end your current Sync Play session, then choose
+            a new session and begin a new session.
+          </li>
+        </ol>
+
+        <!-- Coast to Coast -->
+        <div id="coast"></div>
+        <h2 class="sec-coast">Coast to Coast</h2>
+        <p>
+          <strong
+            >Summary: create a shared experience by watching a video with
+            someone and having an open communication channel to talk, either
+            open mic or push to talk.</strong
+          >
+        </p>
+        <ol>
+          <li>
+            First, activate Coast to Coast by enabling Coast to Coast controls
+            in Settings.
+          </li>
+          <li>
+            If you have the Coast to Coast microservice, the Coast to Coast URL
+            will be populated. Impala uses this fully for this feature.
+          </li>
+          <li>
+            Returning back to the player, you will see the Collaboration panel
+            added; click Open Controls to gain access to the Coast to Coast
+            configuration control.
+          </li>
+          <li>
+            Select the video you want to share; when the video is loaded in the
+            player you can click Create Room. This will also generate a Join
+            Code for this session.
+          </li>
+          <li>
+            Click "Copy Join Code" and share this with the person you would like
+            to share with.
+          </li>
+          <li>
+            You can control your microphone by having it open, push to talk,
+            mute and unmute. Your browser will request permissions if needed.
+            Browser permissions are required for voice communication.
+          </li>
+          <li>
+            When you are ready, and your guest is present, just click Play and
+            you can control the presentation as needed, as well as have a
+            conversation while watching.
+          </li>
+          <li>
+            When you are finished, simply click "Leave Room" to terminate the
+            session.
+          </li>
+          <li>
+            Requirements:
+            <ul>
+              <li>
+                All participants must have the Coast to Coast feature enabled.
+              </li>
+              <li>
+                All participants must be on the same cloud library with
+                independent access to the files.
+              </li>
+              <li>Stable internet connection for all participants.</li>
+              <li>
+                Both participants must be using a unit with a microphone and
+                speakers or headphones.
+              </li>
+            </ul>
+          </li>
+        </ol>
+
+        <h3>Return to Normal Playback</h3>
+        <p class="note">
+          When finished with Sync Play, click <strong>Leave Session</strong>.
+          When finished with Coast to Coast, click <strong>Leave Room</strong>.
+          Always leave the active session first. To restore all optional
+          features and browser preferences afterward, open Settings and click
+          <strong>Reset Settings</strong>. Reset Settings does not itself end an
+          active shared session, and it leaves you on the Settings page. Click
+          <strong>Back to Player</strong> when you are ready to resume ordinary
+          playback.
+        </p>
+
+        <!-- Repeat & Shuffle -->
+        <div id="repeat-shuffle"></div>
+        <h2 class="sec-repeat-shuffle">Repeat and Shuffle</h2>
+        <p>
+          <strong
+            >Summary: choose Repeat and Shuffle together or separately to
+            control behavior for your tracks.</strong
+          >
+        </p>
+        <ol>
+          <li>
+            Tap Repeat to cycle through Repeat Off, Repeat One, and Repeat All.
+          </li>
+          <li>
+            Tap Shuffle to toggle shuffle mode on or off.<br />When shuffling,
+            Previous will take you to the last played track, not the previous
+            track in the list.
+          </li>
+        </ol>
+        <ol>
+          <li>
+            When a video has a saved position, use Resume to jump back in.
+          </li>
+          <li>
+            Video and audio views switch automatically based on the selected
+            track.
+          </li>
+        </ol>
+
+        <!-- Save Favorites -->
+        <div id="makePlaylist"></div>
+        <h2 class="sec-makePlaylist">Save Favorites (Starred)</h2>
+        <p>
+          <strong
+            >Summary: star songs first, then save those stars into a
+            playlist.</strong
+          >
+        </p>
+        <ol>
+          <li>In the track list, click the star next to songs you want.</li>
+          <li>Use New From Starred to create a new playlist.</li>
+          <li>Enter a playlist name, then confirm.</li>
+          <li>
+            Use Add Starred to send favorites to an existing custom playlist.
+          </li>
+        </ol>
+
+        <p>If nothing happens:</p>
+        <ol>
+          <li>Check the starred count near the track controls.</li>
+          <li>If it says 0 starred, star at least one song first.</li>
+        </ol>
+
+        <!-- Manage Playlists -->
+        <div id="managePlaylists"></div>
+        <h2 class="sec-managePlaylists">Manage Playlists and Songs</h2>
+        <p>
+          <strong>Summary: use Library &amp; Playlists for organizing.</strong>
+        </p>
+        <ol>
+          <li>Click Library &amp; Playlists.</li>
+          <li>Choose a playlist from the Playlist dropdown.</li>
+          <li>
+            For custom playlists, you can drag to reorder, remove songs, rename,
+            and delete.
+          </li>
+          <li>
+            You can also import a playlist format using the templates provided
+            in the import tool.
+          </li>
+        </ol>
+
+        <p>You can also combine multiple playlists into a new playlist.</p>
+        <ol>
+          <li>
+            The Combine button becomes active when you have created two or more
+            playlists.
+          </li>
+          <li>
+            Select multiple playlists and click Create Combined to generate a
+            new playlist containing all selected items.
+          </li>
+          <li>
+            The Play All button plays the entire playlist from top to bottom.
+          </li>
+        </ol>
+
+        <p>To return to listening, click Back to Player.</p>
+
+        <!-- Local Library -->
+        <div id="localLibrary"></div>
+        <h2 class="sec-localLibrary">Local Library</h2>
+        <p>
+          <strong
+            >Summary: use local directories and the Local Library Companion for
+            local-first playback.</strong
+          >
+        </p>
+        <p>
+          Impala can work entirely from local media if you prefer. You can point
+          Impala at local audio and video directories, or use the Local Library
+          Companion to index your folders and serve a JSON library.
+        </p>
+
+        <ol>
+          <li>
+            In Settings, set Local Audio Directory and Local Video Directory to
+            the folders where your media is stored.
+          </li>
+          <li>
+            Use Test Local Audio and Test Local Video to quickly check
+            reachability.
+          </li>
+          <li>
+            If you run the Local Library Companion, it will scan your folders
+            and expose a JSON index Impala can read.
+          </li>
+          <li>
+            Local MKV titles are prepared with your own FFmpeg installation.
+            The original remains untouched; the durable <code>.impala.mp4</code>
+            and small <code>.impala.json</code> sidecar are saved beside it.
+          </li>
+          <li>
+            Use Voice Sync below the video to move dialogue earlier or later in
+            50 ms steps, then choose Save This Timing to keep that title's default.
+          </li>
+          <li>
+            When Local Library is configured, Source badges and Library views
+            will reflect local media (L) instead of cloud (C).
+          </li>
+        </ol>
+
+        <p class="note">
+          Local Library is fully user-owned. Impala does not upload or harvest
+          your files; it only reads what you point it at for the current
+          deployment. MKV compatibility is local-only and does not change cloud playback.
+        </p>
+
+        <h3>Playing Local MKV Titles</h3>
+        <ol>
+          <li>Install the Companion and make sure FFmpeg and FFprobe are available.</li>
+          <li>
+            Choose a dedicated media folder in Settings. For safety, Impala will
+            not scan an entire drive or your complete user-profile folder.
+          </li>
+          <li>Use Check Connection, then Connect / Rescan.</li>
+          <li>
+            Select an MKV title normally. On its first play, Impala displays
+            preparation progress while the Companion creates a browser-ready copy.
+          </li>
+          <li>
+            Later plays use the prepared copy immediately, including after the
+            browser or Companion has been restarted.
+          </li>
+        </ol>
+        <p class="note">
+          Feature-length preparation can take time on some computers. The
+          Companion continues working if the Impala page is closed or refreshed;
+          reopening the title reconnects to its current progress.
+        </p>
+        <p>
+          The Companion checks the streams before converting. Browser-compatible
+          H.264 video is preserved without re-encoding; if only AC3 or E-AC3 audio
+          is incompatible, Impala converts only that audio to AAC. HEVC and other
+          incompatible video formats require full video preparation.
+        </p>
+        <p>
+          This compatibility check happens automatically on first play, even at
+          Original Timing. An H.264 MP4 with AC3 audio therefore receives a
+          durable AAC-compatible copy before playback instead of playing silently.
+        </p>
+        <p>
+          For a title named <code>Episode.mkv</code>, the Companion keeps the
+          original and creates <code>Episode.impala.mp4</code> plus
+          <code>Episode.impala.json</code> in the same folder. Do not rename only
+          one of these files. If the original MKV changes, Impala safely requires
+          a new preparation instead of trusting an outdated copy.
+        </p>
+
+        <h3>Voice Sync</h3>
+        <p>
+          While a Companion local video is playing, use Voice Sync to move dialogue earlier or
+          later in 50 ms steps, up to two seconds in either direction. Choose
+          <strong>Save This Timing</strong> to make the selected offset the
+          title's default on later plays.
+        </p>
+        <p>
+          Impala pauses the video while applying an adjustment and preserves its
+          current position. It resumes when ready only if it was playing before;
+          a video that was already paused remains paused.
+        </p>
+        <p>
+          Choose <strong>Create Corrected Copy</strong> to create a separate
+          <code>.impala-synced.mp4</code> with that timing committed. The copy is
+          suitable for optional cloud upload and no longer needs live correction.
+        </p>
+        <p class="note">
+          Voice Sync working copies are temporary and automatically bounded by
+          the Companion. The original MKV and durable <code>.impala.mp4</code>
+          remain user-owned and are never removed by cache cleanup.
+        </p>
+
+        <h3>Preparing a Season or Series</h3>
+        <p>
+          When Impala finds multiple MKVs together, it names the detected folder
+          and series and asks before doing additional work. You may prepare only
+          the current title, its folder or season, or the entire series. Related
+          titles are processed one at a time. Use Stop After Current Title to end
+          the queue at a safe checkpoint.
+        </p>
+
+        <!-- Add Songs -->
+        <div id="addSongs"></div>
+        <h2 class="sec-addSongs">Add Songs from the S4 Library</h2>
+        <p>
+          <strong>Summary: browse folders and add tracks to a playlist.</strong>
+        </p>
+        <ol>
+          <li>
+            In Library &amp; Playlists, select a custom playlist (or create
+            one).
+          </li>
+          <li>
+            Use Audio or Video at the top of the library panel to change browse
+            mode.
+          </li>
+          <li>
+            Filter Library can search artist, album, track, or folder text.
+          </li>
+          <li>
+            Select items and use Add Selection, or use New From Selection to
+            create a new playlist from selected tracks.
+          </li>
+          <li>
+            Admins may see Index Audio and Index Video buttons when signed in
+            with admin rights.
+          </li>
+        </ol>
+
+        <!-- Settings -->
+        <div id="userPreferences"></div>
+        <h2 class="sec-userPreferences">Settings</h2>
+        <p>
+          <strong
+            >Summary: personalize look and behavior from the Settings
+            page.</strong
+          >
+        </p>
+        <ol>
+          <li>Choose and apply a color palette (with live preview).</li>
+          <li>Set a custom message and medallion image.</li>
+          <li>
+            Optionally set Local Audio Directory and Local Video Directory.
+          </li>
+          <li>
+            Use Test Local Audio and Test Local Video to quickly check
+            reachability.
+          </li>
+          <li>Enable or disable live stream control surfaces.</li>
+          <li>
+            Reset Settings restores optional features and preferences to their
+            defaults on this browser. Leave any active Sync Play session or
+            Coast room before using it, then click Back to Player afterward.
+          </li>
+        </ol>
+
+        <!-- Local Library JSON -->
+        <div id="localJsonGuide"></div>
+        <h2 class="sec-localJsonGuide">Local Library JSON</h2>
+        <p>
+          <strong
+            >Summary: you can override built-in lists with local JSON
+            entries.</strong
+          >
+        </p>
+        <p>
+          In Settings, paste or drop a JSON manifest into Local Library JSON,
+          then click Apply Local Library JSON.
+        </p>
+
+        <p>Example:</p>
+        <pre>
+{
+  "audio": [
+    {
+      "name": "Rolling In The Deep",
+      "artist": "Adele",
+      "album": "21",
+      "file": "01 Rolling In The Deep.mp3"
+    }
+  ],
+  "video": [
+    {
+      "name": "Happy Days",
+      "artist": "Unknown artist",
+      "file": "Happy Days.mp4",
+      "mediaType": "video"
+    }
+  ]
+}
+</pre
+        >
+
+        <ol>
+          <li>Use file names or relative paths in each entry.</li>
+          <li>Set local directory roots if your files are hosted locally.</li>
+          <li>Clear Local Library JSON to return to built-in lists.</li>
+        </ol>
+
+        <!-- ⭐ ADVANCED SETTINGS -->
+        <div id="advancedSettings"></div>
+        <h2 class="sec-advancedSettings">Advanced Settings</h2>
+        <p>
+          <strong
+            >Summary: advanced controls for stability, indexing, and deployment
+            configuration.</strong
+          >
+        </p>
+
+        <h3>Playback Transitions</h3>
+        <p>
+          Optional polish features that adjust how tracks move from one to the
+          next.
+        </p>
+        <ul>
+          <li>
+            <strong>Skip Excessive Silence</strong> — removes trailing silence
+            at the end of tracks.
+          </li>
+        </ul>
+        <p class="note">
+          Caution: Some recordings (live, ambient, meditation) intentionally
+          include silence. Disable if needed.
+        </p>
+
+        <h3>Live Stream Controls</h3>
+        <p>Advanced stability controls for collaboration and broadcast.</p>
+        <ul>
+          <li>
+            <strong>Sync Ping</strong> — keeps clocks aligned between browsers.
+            Prevents drift.
+          </li>
+          <li>
+            <strong>Count to Cast</strong> — prepares this browser for broadcast
+            and confirms connection.
+          </li>
+        </ul>
+        <p class="note">
+          Expertise: None required. Caution: Disabling Sync Ping may cause drift
+          in Sync Play or Coast to Coast.
+        </p>
+
+        <h3>Local Library Companion</h3>
+        <p>
+          A local-first indexing microservice that scans your folders and
+          provides a JSON library.
+        </p>
+        <ul>
+          <li>
+            <strong>Enable Companion</strong> — allows Impala to index local
+            folders.
+          </li>
+          <li>
+            <strong>Download Companion</strong> — installs the helper service.
+          </li>
+          <li>
+            <strong>Check Connection</strong> — verifies the companion is
+            reachable.
+          </li>
+          <li><strong>Connect / Rescan</strong> — refreshes the index.</li>
+        </ul>
+        <p class="note">
+          Expertise: Low to medium. Caution: Incorrect configuration may result
+          in empty or partial local libraries.
+        </p>
+
+        <h3>Backup & Restore</h3>
+        <p>Export or import browser-local Impala configuration.</p>
+        <ul>
+          <li>
+            Backs up playlists, preferences, playback positions, Local Library
+            JSON, and settings.
+          </li>
+          <li>Restore applies all saved settings to the current browser.</li>
+        </ul>
+        <p class="note">Caution: Restoring overwrites current browser state.</p>
+
+        <h3>System & Support</h3>
+        <p>Diagnostics and support tools.</p>
+        <ul>
+          <li>
+            <strong>Open Diagnostics</strong> — shows playback engine status,
+            playlist counts, storage health, and recent errors.
+          </li>
+          <li>
+            <strong>Send Functional Report</strong> — shares diagnostic data for
+            troubleshooting.
+          </li>
+        </ul>
+        <p class="note">
+          Expertise: None. Impala only sends browser-local Impala state — never
+          personal data.
+        </p>
+
+        <h3>Cloud Library Connection</h3>
+        <p>
+          Advanced deployment configuration. Only change if you know your signer
+          service.
+        </p>
+        <ul>
+          <li>
+            <strong>Signer API URL</strong> — determines which cloud library
+            this browser uses.
+          </li>
+          <li>
+            <strong>Instance ID</strong> — unique identifier for this browser
+            installation.
+          </li>
+          <li>
+            <strong>Regenerate Instance ID</strong> — creates a new identity for
+            this browser.
+          </li>
+        </ul>
+        <p class="note">
+          <strong>Expertise: High.</strong><br />
+          <strong>Caution:</strong> Changing the signer URL or regenerating the
+          Instance ID can disconnect this browser from its deployment.
+        </p>
+
+        <!-- Quick Fixes -->
+        <div id="quickFixes"></div>
+        <h2 class="sec-quickFixes">Quick Fixes</h2>
+        <p>
+          <strong
+            >Summary: most issues are solved by sign-in, source switching, or
+            refresh.</strong
+          >
+        </p>
+        <p>If a song will not play:</p>
+        <ol>
+          <li>Try a different track in the same playlist.</li>
+          <li>Switch to another Source and then switch back.</li>
+          <li>If prompted, sign in again.</li>
+          <li>Refresh the browser page.</li>
+        </ol>
+
+        <p>If playlists look wrong:</p>
+        <ol>
+          <li>Check whether Local Library JSON is enabled.</li>
+          <li>Clear Local Library JSON if you want built-in lists back.</li>
+          <li>Refresh the page.</li>
+        </ol>
+
+        <p>If stars seem to disappear:</p>
+        <ol>
+          <li>Stars are temporary selections for the current session.</li>
+          <li>
+            Save them with New From Starred or Add Starred before closing.
+          </li>
+        </ol>
+
+        <!-- Shortcuts -->
+        <div id="shortcuts"></div>
+        <h2 class="sec-shortcuts">Keyboard Shortcuts</h2>
+        <p><strong>Summary: helpful, but not required.</strong></p>
+        <ol>
+          <li>S: star or unstar current track</li>
+          <li>A: add starred tracks to an existing playlist</li>
+          <li>N: create new playlist from starred tracks</li>
+          <li>M: open Library &amp; Playlists</li>
+          <li>C: clear starred tracks</li>
+          <li>H or ?: show hotkey help</li>
+        </ol>
+
+        <!-- Manage Profile -->
+        <div id="manageProfile"></div>
+        <h2 class="sec-manageProfile">Managing your Profile</h2>
+        <p>
+          <strong
+            >Summary: what constitutes your profile, how it is stored, and how
+            you can copy it to other devices and browsers.</strong
+          >
+        </p>
+        <p>
+          Any information that you create is stored in your browser cache, and
+          deleted when you clear your cache. It will persist across restart and
+          reboots.
+        </p>
+        <p>
+          This is by design: Impala is intentionally sovereign, deviating from
+          the current centralized model.
+        </p>
+
+        <ol>
+          <li>
+            In Settings, use Backup Profile to export a JSON file of your Impala
+            state.
+          </li>
+          <li>
+            This export includes:
+            <ol class="secondLevel">
+              <li>Custom playlists</li>
+              <li>Preferences</li>
+              <li>Player settings</li>
+              <li>Playback positions</li>
+              <li>Local Library JSON</li>
+            </ol>
+          </li>
+          <li>
+            Use Restore Backup on another device or browser to apply the saved
+            state.
+          </li>
+        </ol>
+
+        <!-- Manage Libraries -->
+        <div id="manageLibrary"></div>
+        <h2 class="sec-manageLibrary">Managing your Media Libraries</h2>
+        <p>
+          <strong
+            >Summary: Impala's libraries require minimal upkeep to remain
+            healthy.</strong
+          >
+        </p>
+        <ol>
+          <li>You have S4 bucket(s) for video and separate for audio.</li>
+          <li>
+            Each bucket has an Indexes folder containing an NDJSON file Impala
+            reads to build the media index.
+          </li>
+          <li>Update indexes whenever files are added or removed.</li>
+          <li>Click Index Video or Index Audio to regenerate the index.</li>
+          <li>Impala will report how many files are present after indexing.</li>
+        </ol>
+
+        <!-- Diagnostics -->
+        <h2 class="sec-diagnostics">Diagnostics</h2>
+        <p>
+          <strong
+            >Summary: use diagnostics for troubleshooting and health
+            checks.</strong
+          >
+        </p>
+        <ol>
+          <li>
+            Access diagnostics from the Settings screen in the System &amp;
+            Support Panel.
+          </li>
+          <li>Click Open Diagnostics for troubleshooting information.</li>
+          <li>Use Send Functional Report to share diagnostics.</li>
+          <li>
+            Diagnostics include player status, playlist counts, storage health,
+            and recent errors.
+          </li>
+        </ol>
+
+        <div id="pagebottom"></div>
+      </main>
+    </div>
+
+    <script src="../app-config.js"></script>
+    <script src="../ui-preferences.js"></script>
+  </body>
+</html>

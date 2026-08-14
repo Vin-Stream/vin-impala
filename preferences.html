@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Impala Streamer Settings</title>
+  <link rel="stylesheet" href="styles.css?v=local-mkv-20260805a" />
+  <link rel="icon" href="./assets/ddMusic.ico" />
+</head>
+
+<body>
+  <div class="page-shell song-list-page-shell">
+    <div class="page-orb page-orb-left"></div>
+    <div class="page-orb page-orb-right"></div>
+
+    <main class="preferences-main">
+      <header class="preferences-top">
+        <div>
+          <p class="eyebrow">Impala Streamer</p>
+          <h1>Settings</h1>
+        </div>
+        <div class="song-list-links">
+          <a class="song-list-back" href="index.html">Back to Player</a>
+          <a class="song-list-back" href="songlist.html">Library</a>
+          <button type="button" id="settings-reset-btn" class="song-list-back prefs-reset-all-btn">Reset Settings</button>
+        </div>
+      </header>
+
+      <p class="preferences-intro">Choose a color palette and personalize player content. Changes are saved for this browser.</p>
+
+      <section class="preferences-grid">
+        <section class="prefs-panel" aria-labelledby="color-palette-heading">
+          <h2 id="color-palette-heading">Color Palette</h2>
+          <p>Palette changes apply immediately and are saved for this browser.</p>
+          <div class="prefs-control">
+            <label for="palette-select">Palette</label>
+            <select id="palette-select"></select>
+          </div>
+          <div class="prefs-actions">
+            <button type="button" id="palette-apply-btn">Apply Palette</button>
+            <button type="button" id="palette-reset-btn" class="button-danger-subtle">Reset Default</button>
+          </div>
+          <p id="prefs-status" class="prefs-status" aria-live="polite"></p>
+        </section>
+
+        <section class="prefs-panel" aria-labelledby="palette-preview-heading">
+          <h2 id="palette-preview-heading">Palette Preview</h2>
+          <p id="palette-preview-name">Select a palette to preview key colors.</p>
+          <div class="palette-preview" id="palette-preview"></div>
+        </section>
+      </section>
+
+      <section class="prefs-panel" aria-labelledby="player-customization-heading">
+        <h2 id="player-customization-heading">Player Personalization</h2>
+        <p>Customize the message above the track list and replace the medallion image on the player page.</p>
+
+        <div class="prefs-control">
+          <label for="custom-note-input">Custom Message</label>
+          <textarea id="custom-note-input" rows="3" maxlength="180" placeholder="Type your custom saying"></textarea>
+        </div>
+
+        <div class="prefs-control">
+          <label for="medallion-file-input">Medallion Image</label>
+          <input id="medallion-file-input" type="file" accept="image/png,image/jpeg,image/webp" />
+          <p class="prefs-hint">Drop or choose a square PNG, JPG, or WebP. 256x256 is ideal.</p>
+        </div>
+
+        <details class="prefs-details prefs-compact-details">
+          <summary>Advanced image path</summary>
+          <div class="prefs-control">
+            <label for="medallion-src-input">Medallion Image Path or URL</label>
+            <input id="medallion-src-input" type="text" placeholder="assets/vortexFireUs.png or https://..." />
+            <p class="prefs-hint">Use only when the image is already hosted or already included with this Impala instance.</p>
+          </div>
+        </details>
+
+        <div class="prefs-medallion-preview">
+          <img id="medallion-preview-img" src="assets/ddMusic.ico" alt="Current medallion preview" />
+        </div>
+
+        <div class="prefs-actions">
+          <button type="button" id="customize-apply-btn">Apply Content</button>
+          <button type="button" id="customize-reset-btn" class="button-danger-subtle">Reset Content</button>
+        </div>
+      </section>
+
+      <section class="prefs-panel" aria-labelledby="playback-transition-heading">
+        <h2 id="playback-transition-heading">Playback Transitions</h2>
+        <p>Optional controls for moving cleanly between music tracks.</p>
+
+        <label class="prefs-toggle" for="skip-tail-silence-enabled-input">
+          <input id="skip-tail-silence-enabled-input" type="checkbox" />
+          <span>Skip excessive silence at the end of tracks</span>
+        </label>
+        <p class="prefs-hint">Off by default. Intentional quiet endings remain unchanged when this is off.</p>
+        <p id="playback-transition-status" class="prefs-status" aria-live="polite"></p>
+      </section>
+
+      <section class="prefs-panel" aria-labelledby="live-stream-heading">
+        <h2 id="live-stream-heading">Live Stream</h2>
+        <p>Optional: reveal the live stream control surface. The core player is unchanged when this is off.</p>
+
+        <label class="prefs-toggle" for="live-stream-enabled-input">
+          <input id="live-stream-enabled-input" type="checkbox" />
+          <span>Enable Live Stream controls</span>
+        </label>
+
+        <p id="live-stream-status" class="prefs-status" aria-live="polite"></p>
+      </section>
+
+      <section class="prefs-panel" aria-labelledby="sync-play-heading">
+        <h2 id="sync-play-heading">Sync Play</h2>
+        <p>Optional: watch the same shared-library video together. Each viewer streams independently; only temporary playback control passes through Sync Play.</p>
+
+        <label class="prefs-toggle" for="sync-play-enabled-input">
+          <input id="sync-play-enabled-input" type="checkbox" />
+          <span>Enable Sync Play controls</span>
+        </label>
+
+        <div class="prefs-control">
+          <label for="sync-play-api-url-input">Sync Play Service URL</label>
+          <input id="sync-play-api-url-input" type="url" placeholder="https://your-sync-play-service.herokuapp.com" />
+        </div>
+
+        <div class="prefs-actions">
+          <button type="button" id="sync-play-apply-btn">Apply Sync Play Settings</button>
+        </div>
+        <p id="sync-play-status" class="prefs-status" aria-live="polite"></p>
+      </section>
+
+      <section class="prefs-panel" aria-labelledby="coast-heading">
+        <h2 id="coast-heading">Coast to Coast</h2>
+        <p>Optional: a private two-person shared video with direct browser-to-browser voice. Conversations are not recorded.</p>
+        <label class="prefs-toggle" for="coast-enabled-input">
+          <input id="coast-enabled-input" type="checkbox" />
+          <span>Enable Coast to Coast controls</span>
+        </label>
+        <div class="prefs-control">
+          <label for="coast-api-url-input">Coast to Coast Service URL</label>
+          <input id="coast-api-url-input" type="url" placeholder="https://your-coast-service.herokuapp.com" />
+        </div>
+        <div class="prefs-actions">
+          <button type="button" id="coast-apply-btn">Apply Coast to Coast Settings</button>
+        </div>
+        <p id="coast-status" class="prefs-status" aria-live="polite"></p>
+      </section>
+
+      <section class="prefs-panel" aria-labelledby="local-helper-heading">
+        <h2 id="local-helper-heading">Local Library Companion</h2>
+        <p>Optional: use a small helper running only on this PC to browse local media. MKV compatibility is local-only; prepared MP4 copies are saved beside their originals. Cloud playback is unchanged.</p>
+
+        <label class="prefs-toggle" for="local-helper-enabled-input">
+          <input id="local-helper-enabled-input" type="checkbox" />
+          <span>Enable Local Library Companion</span>
+        </label>
+
+        <div class="prefs-control">
+          <label for="local-helper-root-input">Media Folder</label>
+          <input id="local-helper-root-input" type="text" placeholder="C:\Users\YourName\Music" />
+          <p class="prefs-hint">Choose a dedicated media folder, not an entire drive or user profile. Files may be directly inside it or nested in any folder structure.</p>
+        </div>
+
+        <details class="prefs-details">
+          <summary>Advanced local library options</summary>
+          <div class="prefs-control">
+            <label for="local-helper-port-input">Helper Port</label>
+            <input id="local-helper-port-input" type="number" min="1024" max="65535" step="1" placeholder="8089" />
+            <p class="prefs-hint">Use 8089 unless the helper reports a port conflict.</p>
+          </div>
+
+          <section class="prefs-subsection" aria-labelledby="local-media-heading">
+            <h3 id="local-media-heading">Local Media Directories</h3>
+            <p>Optional fallback for browser-friendly local hosting. Most users should use Local Library Companion instead.</p>
+
+            <div class="prefs-control">
+              <label for="local-audio-dir-input">Local Audio Directory</label>
+              <input id="local-audio-dir-input" type="text" placeholder="/media/audio or file:///home/you/media/audio" />
+            </div>
+
+            <div class="prefs-control">
+              <label for="local-video-dir-input">Local Video Directory</label>
+              <input id="local-video-dir-input" type="text" placeholder="/media/videos or file:///home/you/media/videos" />
+            </div>
+
+            <div class="prefs-actions">
+              <button type="button" id="media-roots-apply-btn">Apply Local Media</button>
+              <button type="button" id="media-roots-reset-btn" class="button-danger-subtle">Clear Local Media</button>
+              <button type="button" id="media-roots-test-audio-btn">Test Local Audio</button>
+              <button type="button" id="media-roots-test-video-btn">Test Local Video</button>
+            </div>
+          </section>
+
+          <section class="prefs-subsection" aria-labelledby="local-library-heading">
+            <h3 id="local-library-heading">Local Library JSON</h3>
+            <p>Backup method: paste or drop a JSON manifest. See the <a href="userGuide/userGuide.html#localJsonGuide" target="_blank" rel="noopener">Local Library JSON guide</a>.</p>
+
+            <div class="prefs-control">
+              <label for="local-library-json-input">Drop JSON here</label>
+              <textarea
+                id="local-library-json-input"
+                class="prefs-dropzone"
+                rows="8"
+                spellcheck="false"
+                placeholder='Drop a JSON file here or paste a manifest like { "audio": [...], "video": [...] }'></textarea>
+              <p class="prefs-hint">Supported entries can use name, title, artist, album, objectKey, or file.</p>
+            </div>
+
+            <div class="prefs-actions">
+              <button type="button" id="local-library-apply-btn">Apply Local Library JSON</button>
+              <button type="button" id="local-library-reset-btn" class="button-danger-subtle">Clear Local Library JSON</button>
+            </div>
+          </section>
+        </details>
+
+        <div class="prefs-actions">
+          <a id="local-helper-download-link" class="button-link" href="#" aria-disabled="true">Download Companion</a>
+          <button type="button" id="local-helper-check-btn">Check Connection</button>
+          <button type="button" id="local-helper-connect-btn">Connect / Rescan</button>
+        </div>
+
+        <p id="local-helper-status" class="prefs-status" aria-live="polite">Local Library Companion is off.</p>
+      </section>
+
+      <section class="prefs-panel" aria-labelledby="backup-heading">
+        <h2 id="backup-heading">Backup & Restore</h2>
+        <p>Export or restore this browser's Impala identity data: preferences, playlists, player settings, playback positions, and local library JSON. Sign-in sessions and diagnostics are not included.</p>
+
+        <div class="prefs-actions">
+          <button type="button" id="backup-export-btn">Export Backup JSON</button>
+        </div>
+        <p id="backup-status" class="prefs-status" aria-live="polite"></p>
+
+        <div class="prefs-control">
+          <label for="backup-import-input">Restore from Backup JSON</label>
+          <input id="backup-import-input" type="file" accept="application/json,.json" />
+          <p class="prefs-hint">Restore overwrites the matching local browser data with values from the backup file.</p>
+        </div>
+
+        <div class="prefs-actions">
+          <button type="button" id="backup-restore-btn">Restore Backup</button>
+        </div>
+      </section>
+
+      <section class="prefs-panel" aria-labelledby="system-support-heading">
+        <h2 id="system-support-heading">System &amp; Support</h2>
+        <p>Review local functional diagnostics or open the consent-based feedback form.</p>
+        <div class="prefs-actions">
+          <a class="button-link" href="diagnostics.html">Open Diagnostics</a>
+          <a class="button-link" href="index.html">Back to Player</a>
+        </div>
+        <p class="prefs-hint">On the player, press <strong>Ctrl+Shift+F</strong> to open feedback. Nothing is sent until you review the form and choose Send.</p>
+      </section>
+
+      <section class="prefs-panel prefs-danger-panel" aria-labelledby="cloud-connection-heading">
+        <h2 id="cloud-connection-heading">Cloud Library Connection</h2>
+        <p>Advanced: connect this browser to an Impala signer service. Change this only when you are certain which signer belongs to this instance.</p>
+
+        <div class="prefs-control">
+          <label for="cloud-api-url-input">Signer API URL</label>
+          <input id="cloud-api-url-input" type="url" placeholder="https://your-impala-signer.herokuapp.com" />
+          <p class="prefs-hint">S4 bucket names, keys, endpoint, and region stay on the signer service. Changing this signs out the current cloud session.</p>
+        </div>
+
+        <div class="prefs-actions">
+          <button type="button" id="cloud-api-apply-btn">Apply Cloud Connection</button>
+          <button type="button" id="cloud-api-reset-btn" class="button-danger-subtle">Use Default Connection</button>
+          <button type="button" id="cloud-api-test-btn">Test Connection</button>
+        </div>
+        <p id="cloud-api-status" class="prefs-status" aria-live="polite"></p>
+
+        <div class="prefs-control">
+          <label for="instance-id-output">Instance ID</label>
+          <input id="instance-id-output" type="text" readonly />
+          <p class="prefs-hint">This identifies this browser/device installation for future sync and support boundaries. It is included in backups.</p>
+        </div>
+
+        <label class="prefs-toggle prefs-warning-toggle" for="instance-id-confirm-input">
+          <input id="instance-id-confirm-input" type="checkbox" />
+          <span>I understand regenerating the Instance ID may disconnect this browser from future device-specific sync or support records.</span>
+        </label>
+
+        <div class="prefs-actions">
+          <button type="button" id="instance-id-regenerate-btn" class="button-danger-subtle" disabled>Regenerate Instance ID</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app-config.js?v=local-mkv-20260805a"></script>
+  <script src="ui-preferences.js?v=sync-play-20260724a"></script>
+  <script src="playlist-store.js?v=seed-playlists-20260714a"></script>
+  <script src="track-selection-store.js"></script>
+  <script src="player-state-store.js?v=local-mkv-20260805a"></script>
+  <script src="identity-backup.js?v=backup-status-20260626"></script>
+  <script src="preferences.js?v=local-mkv-20260805a"></script>
+</body>
+
+</html>

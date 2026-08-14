@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sign In | Impala Streamer</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="./assets/ddMusic.ico" />
+</head>
+
+<body>
+  <div class="page-shell auth-page-shell">
+    <div class="page-orb page-orb-left"></div>
+    <div class="page-orb page-orb-right"></div>
+
+    <main class="signin-card">
+      <a class="signin-back" href="index.html" aria-label="Back to player">← Back to Player</a>
+      <div class="signin-brand">
+        <img src="assets/ddMusic.ico" alt="" />
+        <div>
+          <p class="eyebrow">Impala Streamer</p>
+          <h1>Welcome back</h1>
+        </div>
+      </div>
+      <p class="signin-intro">Sign in to play media from your private library.</p>
+
+      <form class="signin-form" id="signin-form">
+        <label for="signin-username">Username</label>
+        <input type="text" id="signin-username" name="username" autocomplete="username" required autofocus />
+        <label for="signin-password">Password</label>
+        <input type="password" id="signin-password" name="password" autocomplete="current-password" required />
+        <button type="submit" id="signin-submit">Sign In</button>
+      </form>
+
+      <section class="signed-in-panel" id="signed-in-panel" hidden>
+        <p id="signed-in-copy"></p>
+        <div class="signed-in-actions">
+          <a href="index.html">Open Player</a>
+          <button type="button" id="signin-logout">Log Out</button>
+        </div>
+      </section>
+      <p class="signin-status" id="signin-status" aria-live="polite"></p>
+    </main>
+  </div>
+
+  <script src="app-config.js"></script>
+  <script src="auth-session.js"></script>
+  <script src="ui-preferences.js"></script>
+  <script src="signin.js"></script>
+</body>
+
+</html>

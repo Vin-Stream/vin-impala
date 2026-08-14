@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Impala Streamer Library</title>
+  <link rel="stylesheet" href="styles.css?v=local-mkv-20260805a" />
+  <link rel="icon" href="./assets/ddMusic.ico" />
+</head>
+
+<body>
+  <div class="page-shell song-list-page-shell">
+    <div class="page-orb page-orb-left"></div>
+    <div class="page-orb page-orb-right"></div>
+
+    <main class="song-list-container song-list-page">
+      <div class="titles-container">
+        <div class="titles-row">
+          <h1 id="playlist-title">Library & Playlists</h1>
+          <div class="playlist-header-controls">
+            <div class="song-list-links">
+              <a class="song-list-back" href="index.html">Go to Player</a>
+              <div class="rebuild-index-control">
+                <button type="button" id="rebuild-audio-index-btn" class="rebuild-index-button" hidden>Index Audio</button>
+                <button type="button" id="rebuild-video-index-btn" class="rebuild-index-button" hidden>Index Video</button>
+              </div>
+              <a class="song-list-back" href="preferences.html">Settings</a>
+            </div>
+            <div class="editor-view-switch" role="group" aria-label="Editor view">
+              <button type="button" id="playlist-view-btn" class="editor-view-btn">Playlists</button>
+              <button type="button" id="library-view-btn" class="editor-view-btn">Library</button>
+            </div>
+          </div>
+        </div>
+        <div id="rebuild-index-status" class="rebuild-index-status" aria-live="polite"></div>
+        <div id="library-status" class="editor-message page-auth-status" aria-live="polite"></div>
+      </div>
+      <div id="editor-message" class="editor-message" aria-live="polite"></div>
+      <div id="playlist-editor-view" class="editor-view-panel playlist-editor-view">
+        <div class="playlist-view-columns">
+          <section class="playlist-index-panel">
+            <div class="playlist-panel-header">
+              <div>
+                <h2>Playlists</h2>
+                <span class="playlist-panel-copy">Choose a playlist to edit.</span>
+              </div>
+              <div class="playlist-list-actions">
+                <button type="button" id="combine-playlists-btn">Combine</button>
+                <button type="button" id="cancel-combine-playlists-btn" hidden>Cancel</button>
+                <button type="button" id="play-all-playlists-btn">Play All</button>
+              </div>
+            </div>
+            <div id="playlist-list" class="playlist-list" aria-label="Playlists"></div>
+          </section>
+          <section class="playlist-panel">
+            <section class="editor-toolbar playlist-toolbar">
+              <label class="playlist-picker song-editor-picker" for="editor-playlist-selector">
+                <span>Playlist</span>
+                <select id="editor-playlist-selector"></select>
+              </label>
+              <div class="editor-actions">
+                <button type="button" id="rename-playlist-btn">Rename</button>
+                <button type="button" id="export-playlist-btn">Export</button>
+                <button type="button" id="import-playlist-btn">Import</button>
+                <button type="button" id="delete-playlist-btn">Delete Playlist</button>
+              </div>
+            </section>
+            <section id="import-playlist-panel" class="import-playlist-panel" hidden>
+              <label class="import-playlist-input" for="import-playlist-text">
+                <span>Paste Playlist JSON</span>
+                <textarea
+                  id="import-playlist-text"
+                  rows="10"
+                  placeholder="{\n  \"schema\": \"impala.playlist.v1\",\n  \"name\": \"Road Trip\",\n  \"songs\": [\n    { \"name\": \"Song\", \"artist\": \"Artist\", \"objectKey\": \"path/file.mp3\" }\n  ]\n}"
+                  spellcheck="false"
+                ></textarea>
+              </label>
+              <p class="import-playlist-help">Accepts Impala playlist export JSON, plus older const-array templates. Supports title or name, plus artist and objectKey/file.</p>
+              <div class="import-playlist-actions">
+                <button type="button" id="import-playlist-apply-btn">Import Playlist</button>
+                <button type="button" id="import-playlist-merge-btn">Merge Into Current</button>
+                <button type="button" id="import-playlist-cancel-btn">Cancel</button>
+              </div>
+            </section>
+            <section id="delete-playlist-panel" class="import-playlist-panel" hidden>
+              <label class="import-playlist-input" for="delete-playlist-selector">
+                <span>Select Playlist To Delete</span>
+                <select id="delete-playlist-selector"></select>
+              </label>
+              <p class="import-playlist-help">Choose one custom playlist, then delete it permanently.</p>
+              <div class="import-playlist-actions">
+                <button type="button" id="delete-playlist-apply-btn">Delete Selected Playlist</button>
+                <button type="button" id="delete-playlist-cancel-btn">Cancel</button>
+              </div>
+            </section>
+            <div class="playlist-panel-header">
+              <h2>Current Playlist</h2>
+              <span class="playlist-panel-copy">Drag tracks to reorder the active playlist.</span>
+            </div>
+            <ul id="song-list"></ul>
+            <button type="button" id="playlist-expand-btn" class="playlist-expand-btn">Show Full Playlist</button>
+          </section>
+        </div>
+      </div>
+        <section id="custom-library-panel" class="library-panel" hidden>
+          <div class="library-panel-header">
+            <div class="library-panel-title-row">
+              <h2>S4 Library</h2>
+              <div class="library-browse-toggle" role="group" aria-label="Browse media type">
+                <button type="button" id="library-mode-audio-btn" class="library-mode-btn is-active" aria-pressed="true">Audio</button>
+                <button type="button" id="library-mode-video-btn" class="library-mode-btn" aria-pressed="false">Video</button>
+              </div>
+            </div>
+            <p class="library-panel-copy">Preview on the right, open to drill down, or add a full folder straight into a playlist.</p>
+          </div>
+          <div id="selected-tracks-panel" class="selected-tracks-panel library-selection-panel">
+            <span id="selected-tracks-count">0 selected</span>
+            <span id="selected-tracks-target" class="selected-tracks-target">Choose destination when adding</span>
+            <div class="selected-tracks-actions">
+              <button type="button" id="create-playlist-btn">New Playlist</button>
+              <button type="button" id="selected-tracks-new-btn">New From Selection</button>
+              <button type="button" id="selected-tracks-add-btn">Add Selection</button>
+              <button type="button" id="selected-tracks-clear-btn">Clear</button>
+            </div>
+          </div>
+          <label class="library-search" for="library-search-input">
+            <span>Filter Library</span>
+            <input
+              id="library-search-input"
+              type="search"
+              placeholder="Filter by title, artist, or folder"
+              autocomplete="off"
+              spellcheck="false"
+            />
+          </label>
+          <div class="library-browser">
+            <section class="library-pane library-artists-pane">
+              <div class="library-pane-header">
+                <h3 id="library-current-heading">Artists</h3>
+                <span id="library-play-hint" class="library-play-hint" hidden>Click on title to play</span>
+                <span id="library-current-title" class="library-pane-label">Select an artist</span>
+              </div>
+              <div id="library-current-list" class="library-list library-artists-row"></div>
+              <div id="library-artist-scrollbar" class="library-artist-scrollbar" aria-hidden="true">
+                <div id="library-artist-scroll-thumb" class="library-artist-scroll-thumb"></div>
+              </div>
+            </section>
+            <div class="library-split">
+              <section class="library-pane">
+                <div class="library-pane-header">
+                  <h3 id="library-preview-heading">Albums</h3>
+                  <span id="library-preview-title" class="library-pane-label">Choose an artist above</span>
+                </div>
+                <div id="library-preview-list" class="library-list"></div>
+              </section>
+              <section class="library-pane">
+                <div class="library-pane-header">
+                  <h3 id="library-tracks-heading">Album</h3>
+                  <span id="library-tracks-title" class="library-pane-label">Choose an album</span>
+                </div>
+                <div id="library-tracks-list" class="library-list"></div>
+              </section>
+            </div>
+          </div>
+        </section>
+    </main>
+  </div>
+
+  <script src="songs.js"></script>
+  <script src="songs-ks.js"></script>
+  <script src="app-config.js?v=local-mkv-20260805a"></script>
+  <script src="auth-session.js"></script>
+  <script src="auth-notice.js?v=user-wording-20260713a"></script>
+  <script src="ui-preferences.js?v=local-helper-20260705a"></script>
+  <script src="dialog-prompts.js?v=dialog-theme-20260626"></script>
+  <script src="playlist-store.js?v=seed-playlists-20260714a"></script>
+  <script src="track-selection-store.js"></script>
+  <script src="songlist.js?v=local-mkv-20260805a"></script>
+</body>
+
+</html>

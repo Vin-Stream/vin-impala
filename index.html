@@ -1,0 +1,471 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Impala Streamer</title>
+    <link rel="stylesheet" href="styles.css?v=local-mkv-20260805a" />
+    <link rel="icon" href="./assets/ddMusic.ico" />
+    <script src="app-config.js?v=carplay-20260810b"></script>
+    <script src="auth-session.js"></script>
+    <script src="api-client.js?v=user-wording-20260713a"></script>
+    <script src="auth-notice.js?v=user-wording-20260713a"></script>
+  </head>
+
+  <body>
+    <div class="page-shell">
+      <div class="page-orb page-orb-left"></div>
+      <div class="page-orb page-orb-right"></div>
+
+      <main class="player-container">
+        <section class="card-hero">
+          <div class="hero-meta">
+            <button
+              type="button"
+              id="impala-title"
+              class="eyebrow impala-title"
+              aria-haspopup="dialog"
+              title="About Impala Streamer"
+            >
+              Impala Streamer
+            </button>
+            <div class="hero-actions">
+              <button
+                type="button"
+                class="account-link"
+                id="about-link"
+                aria-haspopup="dialog"
+                title="About Impala Streamer"
+              >
+                About
+              </button>
+              <a class="account-link" id="account-link" href="signin.html"
+                >Sign In</a
+              >
+            </div>
+          </div>
+          <h1 id="card-title">Impala Streamer</h1>
+          <p class="card-subtitle"></p>
+        </section>
+
+        <section class="player-main">
+          <div class="player-frame">
+            <div class="player-stage">
+              <div class="lcd-display" id="lcdDisplay">
+                <div class="lcd-status-row">
+                  <span
+                    id="media-source-badge"
+                    class="media-source-badge"
+                    aria-label="Media source"
+                    title="Media source"
+                    >-</span
+                  >
+                  <span id="status" class="lcd-playback-status">Paused</span>
+                  <span class="lcd-mode-indicators" aria-label="Playback modes">
+                    <span id="lcd-shuffle-indicator" class="lcd-mode-indicator" hidden>Shuffle</span>
+                    <span id="lcd-repeat-indicator" class="lcd-mode-indicator" hidden>Repeat</span>
+                  </span>
+                </div>
+                <div class="lcd-now-playing">
+                  <span id="current-song">No song playing</span>
+                  <span class="playlist-label">Playlist</span>
+                  <span id="playlist">No playlist</span>
+                </div>
+              </div>
+              <div class="transport-controls" aria-label="Player controls">
+                <button
+                  type="button"
+                  class="transport-btn"
+                  data-action="prev"
+                  aria-label="Previous song"
+                >
+                  Prev
+                </button>
+
+                <button
+                  type="button"
+                  class="transport-btn transport-btn-primary"
+                  data-action="toggle"
+                  aria-label="Play or pause"
+                >
+                  Play/<wbr />Pause
+                </button>
+
+                <button
+                  type="button"
+                  class="transport-btn"
+                  data-action="next"
+                  aria-label="Next song"
+                >
+                  Next
+                </button>
+                
+                <button
+                  type="button"
+                  class="transport-btn transport-btn-random"
+                  id="random-mode-btn"
+                  data-action="random"
+                  aria-label="Shuffle"
+                  title="Shuffle tracks"
+                  aria-pressed="false"
+                >
+                  Shuffle
+                </button>
+
+                <button
+                  type="button"
+                  class="transport-btn transport-btn-repeat"
+                  data-action="repeat"
+                  id="repeat-mode-btn"
+                  aria-label="Repeat mode"
+                  title="Change repeat mode"
+                >
+                  Repeat Off
+                </button>
+              </div>
+
+              <div class="transport-secondary">
+                <label class="playlist-picker" for="playlist-selector">
+                  <select id="playlist-selector"></select>
+                </label>
+              </div>
+
+              <button type="button" id="resume-impala-btn" class="resume-impala-btn" hidden>
+                Resume Impala
+              </button>
+
+              <div class="video-screen" id="video-screen" hidden>
+                <video id="videoPlayer" playsinline controls></video>
+                <button
+                  type="button"
+                  id="video-resume-btn"
+                  class="video-resume-btn"
+                  hidden
+                >
+                  Resume
+                </button>
+              </div>
+
+              <div id="voice-sync-panel" class="voice-sync-panel" hidden>
+                <span class="voice-sync-heading">
+                  <strong>Voice Sync</strong>
+                  <small>Audio timing for this title</small>
+                </span>
+                <div class="voice-sync-actions" aria-label="Voice Sync adjustment">
+                  <button type="button" id="voice-sync-earlier-btn" aria-label="Move audio 50 milliseconds earlier">Audio Earlier</button>
+                  <output id="voice-sync-value" aria-live="polite">Original timing</output>
+                  <button type="button" id="voice-sync-later-btn" aria-label="Move audio 50 milliseconds later">Audio Later</button>
+                  <button type="button" id="voice-sync-reset-btn">Reset</button>
+                  <button type="button" id="voice-sync-save-btn">Save This Timing</button>
+                  <button type="button" id="voice-sync-corrected-btn">Create Corrected Copy</button>
+                </div>
+              </div>
+
+              <div id="mkv-bulk-status" class="mkv-bulk-status" hidden aria-live="polite">
+                <span id="mkv-bulk-status-text"></span>
+                <button type="button" id="mkv-bulk-stop-btn">Stop After Current Title</button>
+              </div>
+
+              <details class="collaboration-panel" data-collaboration-surface hidden>
+                <summary>
+                  <span>
+                    <strong>Collaboration</strong>
+                    <small>Watch together, on your terms</small>
+                  </span>
+                  <span class="collaboration-summary-action">Open controls</span>
+                </summary>
+                <div class="collaboration-content">
+              <section id="sync-play-panel" class="sync-play-panel collaboration-module" data-sync-play-surface hidden aria-labelledby="sync-play-title">
+                <div class="sync-play-heading">
+                  <strong id="sync-play-title">Sync Play</strong>
+                  <span id="sync-play-session-code" class="sync-play-code"></span>
+                </div>
+                <div class="sync-play-setup">
+                  <select id="sync-play-control-mode" aria-label="Sync Play control mode">
+                    <option value="host">Master · host controls</option>
+                    <option value="shared">Shared · anyone controls</option>
+                  </select>
+                  <input id="sync-play-code-input" type="text" maxlength="12" placeholder="IMPALA-XXXXX" aria-label="Sync Play session code" />
+                </div>
+                <div id="sync-play-active" class="sync-play-active">
+                  <button type="button" id="sync-play-create-btn">Create Session</button>
+                  <button type="button" id="sync-play-leave-btn" disabled>Leave Session</button>
+                  <button type="button" id="sync-play-copy-btn" disabled>Copy Join Code</button>
+                  <button type="button" id="sync-play-join-btn">Join</button>
+                </div>
+                <p id="sync-play-status" class="sync-play-status" aria-live="polite">Load a video, then create or join a session.</p>
+              </section>
+
+              <section id="coast-panel" class="sync-play-panel collaboration-module" data-coast-surface hidden aria-labelledby="coast-title">
+                <div class="sync-play-heading">
+                  <strong id="coast-title">Coast to Coast</strong>
+                  <span id="coast-room-code" class="sync-play-code"></span>
+                </div>
+                <div class="sync-play-setup">
+                  <select id="coast-mic-mode" aria-label="Microphone mode">
+                    <option value="open">Open mic</option>
+                    <option value="push">Push to talk</option>
+                  </select>
+                  <input id="coast-code-input" type="text" maxlength="11" placeholder="COAST-XXXXX" aria-label="Coast room code" />
+                </div>
+                <div class="sync-play-active">
+                  <button type="button" id="coast-create-btn">Create Room</button>
+                  <button type="button" id="coast-leave-btn" disabled>Leave Room</button>
+                  <button type="button" id="coast-copy-btn" disabled>Copy Join Code</button>
+                  <button type="button" id="coast-join-btn">Join</button>
+                  <button type="button" id="coast-mute-btn" disabled>Mute Mic</button>
+                  <button type="button" id="coast-ptt-btn" disabled>Hold to Talk</button>
+                </div>
+                <p id="coast-status" class="sync-play-status" aria-live="polite">Load a video, then create or join a private room.</p>
+                <audio id="coast-remote-audio" autoplay></audio>
+              </section>
+                </div>
+              </details>
+
+              <audio id="audioPlayer" controls></audio>
+            </div>
+            <div class="userGuideLink">
+              <a href="songlist.html" id="songList">Library & Playlists</a>
+              <a href="preferences.html">Settings</a>
+              <a href="live.html" data-live-stream-surface hidden>Live Stream</a>
+              <a href="userGuide/userGuide.html" target="_blank" rel="noopener"
+                >User Guide</a
+              >
+            </div>
+          </div>
+
+          <div class="player-aside">
+            <div class="player-aside-copy">
+              <p class="player-aside-label">Now Playing</p>
+              <p class="player-aside-text">.</p>
+            </div>
+            <div class="art-row" aria-label="Player artwork">
+              <img
+                id="player-medallion"
+                class="art-tile"
+                src="assets/ddMusic.ico"
+                alt="DD Music"
+              />
+            </div>
+          </div>
+
+          <div
+            class="starred-controls-panel"
+            aria-label="Starred track controls"
+          >
+            <span id="player-starred-count" class="player-starred-count"
+              >0 starred</span
+            >
+            <div class="track-panel-actions">
+              <button
+                type="button"
+                id="player-add-starred-btn"
+                class="player-starred-btn"
+              >
+                Add Starred
+              </button>
+              <button
+                type="button"
+                id="player-new-starred-btn"
+                class="player-starred-btn"
+              >
+                New From Starred
+              </button>
+              <button
+                type="button"
+                id="player-manage-starred-btn"
+                class="player-starred-btn"
+              >
+                Manage Starred
+              </button>
+              <button
+                type="button"
+                id="player-clear-starred-btn"
+                class="player-starred-btn"
+              >
+                Clear
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <section class="card-copy">
+          <div class="card-note">
+            <p id="custom-note-text">
+              Be Sovereign, Stay Sovereign.
+            </p>
+          </div>
+
+          <div class="track-panel">
+            <div class="track-panel-header">
+              <span>Titles</span>
+              <span id="track-count">0 titles</span>
+            </div>
+            <div class="track-panel-tools">
+              <label class="track-filter" for="track-filter-input">
+                <span>Filter Titles By</span>
+                <input
+                  id="track-filter-input"
+                  type="search"
+                  placeholder="Search term"
+                  autocomplete="off"
+                  spellcheck="false"
+                />
+              </label>
+              <div class="track-seek">
+                <span>Seek</span>
+                <button
+                  type="button"
+                  id="scroll-playing-btn"
+                  class="scroll-playing-btn"
+                  title="Go to track currently playing"
+                  aria-label="Go to track currently playing"
+                >Now Playing</button>
+              </div>
+            </div>
+            <div id="track-list" class="track-list"></div>
+          </div>
+        </section>
+
+        <p class="player-trademark">Impala Streamer&trade;</p>
+      </main>
+    </div>
+
+    <dialog id="about-dialog" class="about-dialog" aria-labelledby="about-title">
+      <div class="about-panel">
+        <div class="about-header">
+          <div>
+            <p class="eyebrow">About ImpalaStreamer</p>
+            <h2 id="about-title">Impala Streamer</h2>
+          </div>
+          <button type="button" id="about-close" class="about-close" aria-label="Close about">&times;</button>
+        </div>
+
+        <section class="about-section about-identity">
+          <img src="assets/ddMusic.ico" alt="Impala Streamer" />
+          <div>
+            <p id="about-version" class="about-version">v1.2.0 · Build 2026.08.13</p>
+            <p class="about-tagline">Stability first. Performance second. Hype never.</p>
+          </div>
+        </section>
+
+        <section class="about-section">
+          <h3>Verified Performance</h3>
+          <div class="about-badges" aria-label="Verified performance badges">
+            <figure>
+              <img src="assets/badges/5days.png" alt="5 Days Continuous Operation badge" />
+              <figcaption>5 Days<br />Continuous Operation</figcaption>
+            </figure>
+            <figure>
+              <img src="assets/badges/4K3D.png" alt="4K 3D Playback badge" />
+              <figcaption>4K 3D Playback<br />No Jitter · No Buffering</figcaption>
+            </figure>
+            <figure>
+              <img src="assets/badges/cloudFriendly.png" alt="Cloud Friendly badge" />
+              <figcaption>Cloud Friendly</figcaption>
+            </figure>
+            <figure>
+              <img src="assets/badges/itJustWorks-wMatt.png" alt="It just works badge" />
+              <figcaption>It Just Works</figcaption>
+            </figure>
+          </div>
+        </section>
+
+        <section class="about-section">
+          <h3>System Philosophy</h3>
+          <p>
+            ImpalaStreamer is built for users, not marketers. Every feature is tested under real-world
+            conditions: normal hardware, normal networks, and multi-day uptime. No shortcuts, no fragile
+            dependencies, no demo-only behavior.
+          </p>
+          <p>The goal is simple: start bringing back that rarest of achievements, "It just works."</p>
+        </section>
+
+        <section class="about-section about-system">
+          <h3>Technical Info</h3>
+          <dl>
+            <div><dt>Browser</dt><dd id="about-browser">-</dd></div>
+            <div><dt>Platform</dt><dd id="about-platform">-</dd></div>
+            <div><dt>Connection</dt><dd id="about-connection">-</dd></div>
+            <div><dt>Media Source</dt><dd id="about-media-source">-</dd></div>
+          </dl>
+        </section>
+
+        <section class="about-section about-legal">
+          <h3>Legal</h3>
+          <p>Impala Streamer&trade; is a trademark of Discrete Development LLC.</p>
+          <p>Copyright &copy; 2024&ndash;2026 Discrete Development LLC. All rights reserved.</p>
+        </section>
+      </div>
+    </dialog>
+
+    <dialog id="about-promo-dialog" class="about-promo-dialog" aria-labelledby="about-promo-title">
+      <div class="about-promo-panel">
+        <div class="about-promo-header">
+          <div>
+            <p class="eyebrow">From the archive</p>
+            <h2 id="about-promo-title">A Discrete Development Original</h2>
+          </div>
+          <button type="button" id="about-promo-close" class="about-close" aria-label="Close promo">&times;</button>
+        </div>
+        <div id="about-promo-frame-host" class="about-promo-frame-host"></div>
+      </div>
+    </dialog>
+
+    <dialog id="feedback-dialog" class="feedback-dialog" aria-labelledby="feedback-title">
+      <form id="feedback-form" class="feedback-form" method="dialog">
+        <div class="feedback-heading">
+          <div>
+            <p class="eyebrow">Pilot support</p>
+            <h2 id="feedback-title">Send functional feedback</h2>
+          </div>
+          <button type="button" id="feedback-close" class="feedback-close" aria-label="Close feedback">&times;</button>
+        </div>
+        <div class="feedback-sentiments" role="group" aria-label="How is Impala working?">
+          <button type="button" data-sentiment="works-great" aria-pressed="false">👍 Works great</button>
+          <button type="button" data-sentiment="something-off" aria-pressed="false">😐 Something’s off</button>
+          <button type="button" data-sentiment="not-good" aria-pressed="false">👎 Not good</button>
+        </div>
+        <label class="feedback-message" for="feedback-text">
+          <span>What did Impala do?</span>
+          <textarea id="feedback-text" maxlength="4000" rows="5" placeholder="Describe what worked, failed, or needs fixing."></textarea>
+        </label>
+        <div class="feedback-footer">
+          <p id="feedback-status" class="feedback-status" aria-live="polite"></p>
+          <button type="submit" id="feedback-send">Send</button>
+        </div>
+      </form>
+    </dialog>
+
+    <script src="songs.js"></script>
+    <script src="songs-ks.js"></script>
+    <script src="ui-preferences.js?v=local-helper-20260705a"></script>
+    <script src="diagnostics-store.js"></script>
+    <script src="playlist-store.js?v=seed-playlists-20260714a"></script>
+    <script src="track-selection-store.js"></script>
+    <script src="player-state-store.js?v=local-mkv-20260805a"></script>
+    <script src="modules/player-view.js?v=player-view-20260813a"></script>
+    <script src="modules/player-state.js?v=player-state-20260813a"></script>
+    <script src="dialog-prompts.js?v=local-video-sync-20260809a"></script>
+    <script src="media-resolver.js?v=local-video-sync-20260809a"></script>
+    <script src="modules/local-library.js?v=local-library-20260813a"></script>
+    <script src="modules/cloud-library.js?v=cloud-library-20260813a"></script>
+    <script src="modules/live-playback.js?v=live-playback-20260813a"></script>
+    <script src="modules/collaboration.js?v=collaboration-20260813a"></script>
+    <script src="modules/ui-events.js?v=ui-events-20260813a"></script>
+    <script src="modules/boot.js?v=boot-20260813a"></script>
+    <script src="player-engine.js"></script>
+    <script src="audio-engine.js?v=background-transition-20260729a"></script>
+    <script src="live-client.js?v=live-stream-20260627b"></script>
+    <script src="sync-play-client.js?v=sync-play-20260724a"></script>
+    <script src="sync-play-controller.js?v=sync-play-20260724a"></script>
+    <script src="coast-client.js?v=coast-20260724a"></script>
+    <script src="coast-controller.js?v=coast-20260724b"></script>
+    <script src="vendor/hls.min.js?v=live-player-20260627"></script>
+    <script src="hls-adapter.js?v=live-player-20260627c"></script>
+    <script src="modules/media-session.js?v=media-session-20260813a"></script>
+    <script src="ambient-identity.js?v=ambient-identity-20260629"></script>
+    <script src="script.js?v=carplay-recovery-20260813a"></script>
+    <script src="feedback.js?v=v1-system-support-20260725a"></script>
+  </body>
+</html>

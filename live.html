@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Impala Streamer Live</title>
+  <link rel="stylesheet" href="styles.css?v=settings-polish-20260713a" />
+  <link rel="icon" href="./assets/ddMusic.ico" />
+  <script src="app-config.js?v=seed-playlists-20260714a"></script>
+  <script src="auth-session.js"></script>
+  <script src="api-client.js?v=user-wording-20260713a"></script>
+  <script src="auth-guard.js"></script>
+</head>
+
+<body>
+  <div class="page-shell song-list-page-shell">
+    <div class="page-orb page-orb-left"></div>
+    <div class="page-orb page-orb-right"></div>
+
+    <main class="live-main">
+      <header class="preferences-top">
+        <div>
+          <p class="eyebrow">Impala Streamer</p>
+          <h1>Live Stream</h1>
+        </div>
+        <div class="song-list-links">
+          <a class="song-list-back" href="index.html">Back to Player</a>
+          <a class="song-list-back" href="preferences.html">Settings</a>
+        </div>
+      </header>
+
+      <section class="prefs-panel live-panel" aria-labelledby="live-control-heading">
+        <h2 id="live-control-heading">Session Control</h2>
+        <p>This is the isolated live stream control surface. It can be enabled or disabled without changing the core player.</p>
+
+        <div class="live-catalog" aria-labelledby="live-catalog-heading">
+          <div class="live-catalog-header">
+            <h3 id="live-catalog-heading">Catalog</h3>
+            <span id="live-catalog-status" aria-live="polite">Loading streams...</span>
+          </div>
+          <div id="live-catalog-list" class="live-catalog-list"></div>
+        </div>
+
+        <div class="prefs-subsection live-custom-stream" aria-labelledby="live-custom-stream-heading">
+          <h3 id="live-custom-stream-heading">Your Stream</h3>
+          <p>Paste a direct HTTPS audio or HLS stream. It is used for this live session and is not added to Impala's catalog.</p>
+
+          <div class="prefs-control">
+            <label for="live-url-input">Stream URL</label>
+            <input id="live-url-input" type="url" inputmode="url" autocomplete="off" spellcheck="false"
+              maxlength="2048" placeholder="https://example.com/live/master.m3u8" aria-describedby="live-url-help" />
+            <small id="live-url-help">Supports direct HTTPS MP3, AAC, and M3U8 addresses.</small>
+          </div>
+          <input id="live-title-input" type="hidden" value="Personal Stream" />
+        </div>
+
+        <div class="prefs-actions">
+          <button type="button" id="live-refresh-btn">Refresh Status</button>
+          <button type="button" id="live-start-btn">Start Session</button>
+          <button type="button" id="live-stop-btn" disabled>Stop Session</button>
+        </div>
+
+        <p id="live-status" class="prefs-status" aria-live="polite">Loading live stream status...</p>
+        <pre id="live-detail" class="live-detail"></pre>
+      </section>
+    </main>
+  </div>
+
+  <script src="ui-preferences.js?v=local-helper-20260705a"></script>
+  <script src="live-client.js?v=live-stream-20260627b"></script>
+  <script src="live-stream.js?v=user-stream-20260725a"></script>
+</body>
+
+</html>

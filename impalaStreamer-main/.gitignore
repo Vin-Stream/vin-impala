@@ -1,0 +1,13 @@
+.env
+.old
+archived
+.private
+node_modules/
+.build-cache/
+**/.build-cache/
+**/.gocache/
+work/
+dist/
+Thumbs.db
+temp.old
+services/local-library-helper/*.exe

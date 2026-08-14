@@ -1,0 +1,132 @@
+[
+  {
+    "id": "impala-main",
+    "title": "Impala Live",
+    "description": "Pilot live stream",
+    "category": "Pilot",
+    "streamUrl": "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8",
+    "enabled": false,
+    "reviewStatus": "retired",
+    "notes": "Retired after completion of the Impala pilot."
+  },
+  {
+    "id": "weathernation",
+    "title": "WeatherNation",
+    "description": "Continuous national weather coverage and forecasts.",
+    "category": "Weather",
+    "streamUrl": "https://stream.weathernationtv.com/WNTVStirr_eokxldieulowixkdimn/ND1/playlistSCTE35.m3u8",
+    "enabled": true,
+    "reviewStatus": "approved",
+    "notes": "Verified 2026-06-28: master playlist returned 200 and contains media segments."
+  },
+  {
+    "id": "cbs-news-247",
+    "title": "CBS News 24/7",
+    "description": "Continuous national news coverage from CBS News.",
+    "category": "News",
+    "streamUrl": "https://cbsn-us.cbsnstream.cbsnews.com/out/v1/55a8648e8f134e82a470f83d562deeca/master.m3u8",
+    "enabled": true,
+    "reviewStatus": "approved",
+    "notes": "Verified 2026-06-28: master playlist returned 200 and first child media playlist returned 200."
+  },
+  {
+    "id": "california-music-channel",
+    "title": "California Music Channel",
+    "description": "Continuous music-video programming from California Music Channel.",
+    "category": "Music",
+    "streamUrl": "https://cmc-ono.amagi.tv/playlist.m3u8",
+    "enabled": true,
+    "reviewStatus": "approved",
+    "notes": "Verified 2026-06-29: master playlist returned 200 and first child media playlist returned 200."
+  },
+  {
+    "id": "30a-music",
+    "title": "30A Music",
+    "description": "Continuous music-video programming from 30A TV.",
+    "category": "Music",
+    "streamUrl": "https://30a-tv.com/music.m3u8",
+    "enabled": true,
+    "reviewStatus": "approved",
+    "notes": "Verified 2026-06-29: master playlist returned 200 and first child media playlist returned 200."
+  },
+  {
+    "id": "nasa-public",
+    "title": "NASA TV (Public)",
+    "description": "Live NASA programming, mission control, launches, and science coverage.",
+    "category": "Science",
+    "streamUrl": "https://ntv1.akamaized.net/hls/live/2014075/NASA-NTV1/master.m3u8",
+    "enabled": false,
+    "reviewStatus": "pending",
+    "notes": "Verify current URL, playback, and public-use suitability."
+  },
+  {
+    "id": "dw-news",
+    "title": "DW News (English)",
+    "description": "Structured international news from Deutsche Welle.",
+    "category": "News",
+    "streamUrl": "https://dwstream3-lh.akamaihd.net/i/dwstream3_live@124409/master.m3u8",
+    "enabled": false,
+    "reviewStatus": "pending",
+    "notes": "Verify current URL, playback, and public-use suitability."
+  },
+  {
+    "id": "bloomberg-global",
+    "title": "Bloomberg Global",
+    "description": "Global business and markets coverage.",
+    "category": "Finance",
+    "streamUrl": "https://liveprodusphoenixeast.akamaized.net/US/index.m3u8",
+    "enabled": false,
+    "reviewStatus": "pending",
+    "notes": "Verify current URL, playback, and public-use suitability."
+  },
+  {
+    "id": "euronews",
+    "title": "Euronews",
+    "description": "Continuous global news coverage.",
+    "category": "News",
+    "streamUrl": "https://rakuten-euronews-1-eu.rakuten.wurl.tv/playlist.m3u8",
+    "enabled": false,
+    "reviewStatus": "pending",
+    "notes": "Verify current URL, playback, and public-use suitability."
+  },
+  {
+    "id": "skynews-au",
+    "title": "Sky News Australia",
+    "description": "Live news feed for long-session testing.",
+    "category": "News",
+    "streamUrl": "https://skynewsau-live.akamaized.net/hls/live/2002689/skynewsau/master.m3u8",
+    "enabled": false,
+    "reviewStatus": "pending",
+    "notes": "Verify current URL, playback, and public-use suitability."
+  },
+  {
+    "id": "chillhop-lofi",
+    "title": "Chillhop Radio",
+    "description": "Lofi beats for background listening and long-session testing.",
+    "category": "Music",
+    "streamUrl": "https://stream.zeno.fm/fyn8eh0q0f8uv",
+    "enabled": false,
+    "reviewStatus": "pending",
+    "notes": "Verify playback format and public-use suitability."
+  },
+  {
+    "id": "apple-bipbop",
+    "title": "Apple BipBop Test",
+    "description": "Apple ABR test stream for HLS validation.",
+    "category": "Test",
+    "streamUrl": "https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_4x3/bipbop_4x3_variant.m3u8",
+    "enabled": false,
+    "reviewStatus": "pending",
+    "notes": "Verify current URL and use as a technical test stream."
+  },
+  {
+    "id": "mux-test",
+    "title": "Mux Test Stream",
+    "description": "Predictable HLS test stream for debugging.",
+    "category": "Test",
+    "streamUrl": "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8",
+    "enabled": false,
+    "reviewStatus": "pending",
+    "notes": "Verify current URL and use as a technical test stream."
+  }
+]

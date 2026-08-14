@@ -1,0 +1,77 @@
+name: Companion releases
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "companion-v*"
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: ${{ matrix.goos }}-${{ matrix.goarch }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - goos: windows
+            goarch: amd64
+            extension: .exe
+          - goos: windows
+            goarch: arm64
+            extension: .exe
+          - goos: darwin
+            goarch: amd64
+            extension: ""
+          - goos: darwin
+            goarch: arm64
+            extension: ""
+          - goos: linux
+            goarch: amd64
+            extension: ""
+          - goos: linux
+            goarch: arm64
+            extension: ""
+    defaults:
+      run:
+        working-directory: services/local-library-helper
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: services/local-library-helper/go.mod
+          cache-dependency-path: services/local-library-helper/go.mod
+      - name: Test
+        run: go test ./...
+      - name: Build
+        env:
+          CGO_ENABLED: "0"
+          GOOS: ${{ matrix.goos }}
+          GOARCH: ${{ matrix.goarch }}
+        run: >-
+          go build -trimpath -ldflags="-s -w"
+          -o "Impala-Local-Library-Companion-${{ matrix.goos }}-${{ matrix.goarch }}${{ matrix.extension }}" .
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: Impala-Local-Library-Companion-${{ matrix.goos }}-${{ matrix.goarch }}
+          path: services/local-library-helper/Impala-Local-Library-Companion-${{ matrix.goos }}-${{ matrix.goarch }}${{ matrix.extension }}
+          if-no-files-found: error
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/companion-v')
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          merge-multiple: true
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: artifacts/*
