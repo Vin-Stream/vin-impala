@@ -1,6 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
   const audioPlayer = document.getElementById("audioPlayer");
   const videoPlayer = document.getElementById("videoPlayer");
+  videoPlayer?.addEventListener("contextmenu", (event) => {
+    event.preventDefault();
+  });
   const videoScreen = document.getElementById("video-screen");
   const videoResumeButton = document.getElementById("video-resume-btn");
   const resumeImpalaButton = document.getElementById("resume-impala-btn");
