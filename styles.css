@@ -4719,9 +4719,41 @@ body.is-video-mode .library-song-select span {
   font-size: 0.72rem;
 }
 
-.compact-brand-logo,
 .compact-library-name {
   display: none;
+}
+
+.impala-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.compact-brand-logo {
+  display: block;
+  width: 2.65rem;
+  height: 2.65rem;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 0 1px rgba(255, 195, 111, 0.16);
+}
+
+.compact-brand-copy {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.12rem;
+}
+
+.compact-company-name {
+  color: rgba(255, 244, 226, 0.56);
+  font-size: 0.58rem;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  line-height: 1;
+  white-space: nowrap;
 }
 
 /* Compact player: one deliberate mobile screen, with management on Library. */
@@ -4858,6 +4890,11 @@ body.is-video-mode .library-song-select span {
     overflow-wrap: anywhere;
     text-overflow: clip;
     white-space: normal;
+  }
+
+  .compact-company-name {
+    font-size: clamp(0.52rem, 2.1vw, 0.66rem);
+    letter-spacing: 0.12em;
   }
 
   .compact-library-name {
