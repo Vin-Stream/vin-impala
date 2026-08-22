@@ -163,6 +163,7 @@
     cloudApiBaseUrl: String(playerConfig.apiBaseUrl || "").trim().replace(/\/+$/, ""),
     instanceId: ""
   };
+  const LEGACY_SOVEREIGNTY_NOTE = "You are authorized to take back your Sovereignty.";
 
   function createInstanceId() {
     if (globalThis.crypto?.randomUUID) {
@@ -191,6 +192,9 @@
 
     const trimmed = customNote.trim();
     if (!trimmed) {
+      return DEFAULT_PREFS.customNote;
+    }
+    if (trimmed === LEGACY_SOVEREIGNTY_NOTE) {
       return DEFAULT_PREFS.customNote;
     }
 
