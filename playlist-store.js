@@ -18,7 +18,7 @@ const PlaylistStore = (() => {
     },
     {
       id: "songs",
-      name: "Shared Playlist 2",
+      name: "Family Playlist",
       source: () => (typeof songs !== "undefined" && Array.isArray(songs) ? songs : [])
     }
   ];
