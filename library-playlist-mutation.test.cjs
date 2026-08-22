@@ -4,6 +4,7 @@ const path = require("node:path");
 const test = require("node:test");
 
 const source = fs.readFileSync(path.join(__dirname, "songlist.js"), "utf8");
+const libraryMetadataSource = fs.readFileSync(path.join(__dirname, "library-metadata-client.js"), "utf8");
 
 function functionSource(name, nextName) {
   const start = source.indexOf(`function ${name}`);
@@ -27,5 +28,12 @@ test("failed library refresh preserves the last loaded catalog", () => {
 test("browser library metadata uses its locally defined path helper", () => {
   assert.match(source, /function getLibraryLeafName\(/);
   assert.doesNotMatch(source, /\bgetLeafName\(/);
+});
+
+test("playlist cards build lazy four-album artwork mosaics", () => {
+  assert.match(libraryMetadataSource, /albums\.length === 4/);
+  assert.match(libraryMetadataSource, /ImpalaPlaylistArtwork/);
+  assert.match(source, /playlist-artwork-poster/);
+  assert.match(source, /ImpalaPlaylistArtwork\?\.watch/);
 });
 

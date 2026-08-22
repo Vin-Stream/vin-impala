@@ -1518,8 +1518,20 @@ document.addEventListener("DOMContentLoaded", () => {
       const kindLabel = getPlaylistKindLabel(playlist);
       meta.textContent = `${kindLabel} - ${songCount} track${songCount === 1 ? "" : "s"}`;
 
-      button.appendChild(name);
-      button.appendChild(meta);
+      const poster = document.createElement("span");
+      poster.className = "playlist-artwork-poster";
+      poster.setAttribute("aria-hidden", "true");
+      const fallback = document.createElement("img");
+      fallback.src = "assets/ddMusic.ico";
+      fallback.alt = "";
+      poster.appendChild(fallback);
+
+      const copy = document.createElement("span");
+      copy.className = "playlist-list-copy";
+      copy.appendChild(name);
+      copy.appendChild(meta);
+      button.appendChild(poster);
+      button.appendChild(copy);
       button.addEventListener("click", () => {
         currentPlaylistId = playlist.id;
         playlistExpanded = false;
@@ -1545,6 +1557,7 @@ document.addEventListener("DOMContentLoaded", () => {
       row.appendChild(button);
       row.appendChild(playButton);
       playlistList.appendChild(row);
+      window.ImpalaPlaylistArtwork?.watch?.(poster, playlist);
     });
 
     updatePlaylistToolControls();
