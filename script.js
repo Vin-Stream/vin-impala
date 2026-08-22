@@ -47,6 +47,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const authLogoutButton = document.getElementById("auth-logout-btn");
   const accountLink = document.getElementById("account-link");
   const aboutTitle = document.getElementById("impala-title");
+  const editionName = document.getElementById("impala-edition-name");
+  const compactLibraryName = document.getElementById("compact-library-name");
+  const heroMeta = document.querySelector(".hero-meta");
+  const heroActions = document.querySelector(".hero-actions");
+  const playerFooterLinks = document.querySelector(".userGuideLink");
   const aboutLink = document.getElementById("about-link");
   const aboutDialog = document.getElementById("about-dialog");
   const aboutCloseButton = document.getElementById("about-close");
@@ -86,7 +91,8 @@ document.addEventListener("DOMContentLoaded", () => {
       playlistDisplay,
       asideText,
       cardTitle,
-      cardSubtitle
+      cardSubtitle,
+      compactLibraryName
     }
   });
   const authNotice = window.ImpalaAuthNotice;
@@ -987,7 +993,28 @@ document.addEventListener("DOMContentLoaded", () => {
       mediaSource: activeMediaSource,
       mediaUrl: activeMediaUrl
     });
+    document.dispatchEvent(new CustomEvent("impala:mediachange", {
+      detail: { media: song, mediaKind: getMediaInfo(song)?.mediaKind }
+    }));
   }
+
+  if (editionName) {
+    editionName.textContent = String(playerConfig.editionName || playerConfig.brandName || "Impala Streamer").trim();
+  }
+
+  const compactHeaderQuery = window.matchMedia?.("(max-width: 600px) and (orientation: portrait)");
+  function placeAccountActionsForViewport() {
+    if (!heroActions || !heroMeta || !playerFooterLinks || !compactLibraryName) return;
+    if (compactHeaderQuery?.matches) {
+      heroActions.classList.add("is-mobile-footer");
+      playerFooterLinks.appendChild(heroActions);
+      return;
+    }
+    heroActions.classList.remove("is-mobile-footer");
+    heroMeta.insertBefore(heroActions, compactLibraryName);
+  }
+  placeAccountActionsForViewport();
+  compactHeaderQuery?.addEventListener?.("change", placeAccountActionsForViewport);
 
   function updateHeroCopy() {
     playerView.renderHero({

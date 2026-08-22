@@ -360,11 +360,12 @@
       customNoteNode.textContent = normalized.customNote;
     }
 
-    const medallionNode = document.getElementById("player-medallion");
-    if (medallionNode) {
+    document.querySelectorAll("#player-medallion, .compact-brand-logo").forEach((medallionNode) => {
       medallionNode.setAttribute("src", normalized.medallionSrc);
-      medallionNode.setAttribute("alt", "Custom player medallion");
-    }
+      medallionNode.setAttribute("alt", medallionNode.classList.contains("compact-brand-logo")
+        ? ""
+        : "Custom player medallion");
+    });
   }
 
   function applyFeatureSurfaces(preferences) {

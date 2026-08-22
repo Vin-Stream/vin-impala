@@ -5,12 +5,15 @@ window.KW_PLAYER_CONFIG = window.KW_PLAYER_CONFIG || {
     "https://family-impala-live-248de01b2798.herokuapp.com",
   syncPlayApiBaseUrl: "",
   coastApiBaseUrl: "",
+  // Public, read-only metadata sidecar; private playback remains on Family services.
+  metadataApiUrl: "https://impala-streamer-netlify.netlify.app/api/metadata",
   authStorageKey: "impalaFamily.authSession",
   playlistStoragePrefix: "impalaFamily",
   instanceStorageId: "",
   builtInPlaylistsEnabled: true,
   enabledBuiltInPlaylistIds: ["songs"],
   brandName: "Impala Streamer",
+  editionName: "Impala Family Streamer",
   appVersion: "1.2.0",
   appBuildDate: "2026.08.13",
   mkvPlaybackEnabled: true,
@@ -101,6 +104,10 @@ window.ImpalaConfig =
       return String(preferences.instanceId || "").trim();
     }
 
+    function getMetadataApiUrl() {
+      return cleanUrl(config.metadataApiUrl || "");
+    }
+
     function isMkvPlaybackEnabled() {
       return config.mkvPlaybackEnabled === true;
     }
@@ -129,6 +136,7 @@ window.ImpalaConfig =
       getLiveStreamApiBaseUrl,
       getSyncPlayApiBaseUrl,
       getCoastApiBaseUrl,
+      getMetadataApiUrl,
       getInstanceId,
       isMkvPlaybackEnabled,
       areBuiltInPlaylistsEnabled,

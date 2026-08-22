@@ -4,15 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Impala Streamer</title>
-    <link rel="stylesheet" href="styles.css?v=local-mkv-20260805a" />
+    <link rel="stylesheet" href="styles.css?v=mobile-gold-edition-20260822a" />
     <link rel="icon" href="./assets/ddMusic.ico" />
-    <script src="app-config.js?v=carplay-20260810b"></script>
+    <script src="app-config.js?v=metadata-service-url-20260822b"></script>
     <script src="auth-session.js"></script>
     <script src="api-client.js?v=user-wording-20260713a"></script>
     <script src="auth-notice.js?v=user-wording-20260713a"></script>
   </head>
 
-  <body>
+  <body class="player-page">
     <div class="page-shell">
       <div class="page-orb page-orb-left"></div>
       <div class="page-orb page-orb-right"></div>
@@ -27,7 +27,8 @@
               aria-haspopup="dialog"
               title="About Impala Streamer"
             >
-              Impala Streamer
+              <img class="compact-brand-logo" src="assets/ddMusic.ico" alt="" />
+              <span id="impala-edition-name">Impala Streamer</span>
             </button>
             <div class="hero-actions">
               <button
@@ -43,6 +44,7 @@
                 >Sign In</a
               >
             </div>
+            <p id="compact-library-name" class="compact-library-name">Library</p>
           </div>
           <h1 id="card-title">Impala Streamer</h1>
           <p class="card-subtitle"></p>
@@ -247,6 +249,13 @@
                 alt="DD Music"
               />
             </div>
+            <section id="media-metadata" class="media-metadata" aria-live="polite" hidden>
+              <p id="media-metadata-kicker" class="media-metadata-kicker"></p>
+              <h2 id="media-metadata-title"></h2>
+              <p id="media-metadata-detail" class="media-metadata-detail"></p>
+              <p id="media-metadata-summary" class="media-metadata-summary"></p>
+              <a id="media-metadata-source" class="media-metadata-source" target="_blank" rel="noopener noreferrer">View source</a>
+            </section>
           </div>
 
           <div
@@ -439,12 +448,12 @@
 
     <script src="songs.js"></script>
     <script src="songs-ks.js"></script>
-    <script src="ui-preferences.js?v=local-helper-20260705a"></script>
+    <script src="ui-preferences.js?v=compact-header-20260822c"></script>
     <script src="diagnostics-store.js"></script>
     <script src="playlist-store.js?v=seed-playlists-20260714a"></script>
     <script src="track-selection-store.js"></script>
     <script src="player-state-store.js?v=local-mkv-20260805a"></script>
-    <script src="modules/player-view.js?v=player-view-20260813a"></script>
+    <script src="modules/player-view.js?v=compact-header-20260822c"></script>
     <script src="modules/player-state.js?v=player-state-20260813a"></script>
     <script src="dialog-prompts.js?v=local-video-sync-20260809a"></script>
     <script src="media-resolver.js?v=local-video-sync-20260809a"></script>
@@ -465,7 +474,8 @@
     <script src="hls-adapter.js?v=live-player-20260627c"></script>
     <script src="modules/media-session.js?v=media-session-20260813a"></script>
     <script src="ambient-identity.js?v=ambient-identity-20260629"></script>
-    <script src="script.js?v=carplay-recovery-20260813a"></script>
+    <script src="metadata-client.js?v=metadata-sidecar-20260822a"></script>
+    <script src="script.js?v=metadata-sidecar-20260822a"></script>
     <script src="feedback.js?v=v1-system-support-20260725a"></script>
   </body>
 </html>

@@ -1,4 +1,26 @@
-@import url("https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap");
+@font-face {
+  font-family: "Montserrat";
+  src: url("./assets/Montserrat-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Montserrat";
+  src: url("./assets/Montserrat-SemiBold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Montserrat";
+  src: url("./assets/Montserrat-SemiBoldItalic.woff2") format("woff2");
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
 
 @font-face {
   font-family: "Digital-7";
@@ -35,7 +57,7 @@
 }
 
 body {
-  font-family: "Trebuchet MS", Arial, sans-serif;
+  font-family: "Montserrat", "Trebuchet MS", Arial, sans-serif;
   background:
     radial-gradient(circle at top left, var(--theme-bg-1), transparent 28%),
     radial-gradient(circle at 80% 20%, var(--theme-bg-2), transparent 25%),
@@ -926,7 +948,9 @@ body.is-video-mode .library-song-select span {
 }
 
 #card-title {
-  font-family: "Great Vibes", cursive;
+  font-family: "Montserrat", "Trebuchet MS", Arial, sans-serif;
+  font-style: italic;
+  font-weight: 600;
   font-size: clamp(2.1rem, 4vw, 3.2rem);
   line-height: 0.92;
   margin: 0;
@@ -4626,4 +4650,374 @@ body.is-video-mode .library-song-select span {
 
 .spacer {
   height: 2rem;
+}
+
+.library-song.has-metadata-artwork {
+  display: grid;
+  grid-template-columns: 3.25rem minmax(0, 1fr);
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.library-metadata-artwork {
+  display: block;
+  width: 3.25rem;
+  height: 3.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.035);
+  object-fit: cover;
+}
+
+.library-metadata-artwork[hidden] {
+  visibility: hidden;
+}
+
+/* Optional, owner-controlled metadata. Playback never waits on this panel. */
+.media-metadata {
+  flex: 1 1 16rem;
+  min-width: 0;
+}
+
+.media-metadata-kicker,
+.media-metadata-detail,
+.media-metadata-summary {
+  margin: 0;
+}
+
+.media-metadata-kicker {
+  color: var(--accent);
+  font-size: 0.68rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.media-metadata h2 {
+  margin: 0.15rem 0;
+  color: #fff5e7;
+  font-size: 1rem;
+}
+
+.media-metadata-detail,
+.media-metadata-summary {
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.media-metadata-summary {
+  display: -webkit-box;
+  margin-top: 0.25rem;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.media-metadata-source {
+  display: inline-block;
+  margin-top: 0.3rem;
+  color: var(--accent);
+  font-size: 0.72rem;
+}
+
+.compact-brand-logo,
+.compact-library-name {
+  display: none;
+}
+
+/* Compact player: one deliberate mobile screen, with management on Library. */
+@media (max-width: 600px) and (orientation: portrait) {
+  :root {
+    --mobile-ui-font: clamp(0.72rem, 3.1vw, 0.9rem);
+    --mobile-title-font: clamp(1.08rem, 5vw, 1.45rem);
+  }
+
+  body.player-page {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  body.player-page {
+    padding: max(0.35rem, env(safe-area-inset-top)) 0.45rem max(0.35rem, env(safe-area-inset-bottom));
+  }
+
+  .page-shell {
+    min-height: 0;
+    height: 100%;
+  }
+
+  .player-container,
+  body.is-video-mode .player-container {
+    grid-template-rows: auto minmax(0, 1fr);
+    grid-template-areas: "hero" "frame";
+    align-content: stretch;
+    width: 100%;
+    height: 100%;
+    gap: 0.45rem;
+    padding: 0.62rem;
+    border-radius: 22px;
+    overflow: hidden;
+  }
+
+  .card-copy,
+  .starred-controls-panel,
+  .player-trademark,
+  .player-aside-copy {
+    display: none !important;
+  }
+
+  .card-hero {
+    display: block;
+    padding: 0.05rem 0.58rem 0.28rem;
+    border: 1px solid var(--card-border);
+    border-radius: 22px;
+    background:
+      linear-gradient(145deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.015)),
+      var(--panel-bg);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.035),
+      0 14px 32px rgba(0, 0, 0, 0.12);
+  }
+
+  .card-hero h1,
+  .card-subtitle {
+    display: none;
+  }
+
+  .hero-meta {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "brand"
+      "playlist";
+    align-items: center;
+    gap: 0.08rem 0.5rem;
+    width: 100%;
+    min-height: 0;
+  }
+
+  .impala-title,
+  .account-link {
+    padding: 0.25rem 0.45rem;
+    font-size: var(--mobile-ui-font);
+  }
+
+  .impala-title {
+    grid-area: brand;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    width: 100%;
+    min-width: 0;
+    color: #fff5e7;
+    letter-spacing: 0.13em;
+  }
+
+  .compact-brand-logo {
+    display: block;
+    width: clamp(7.75rem, 34vw, 9.5rem);
+    height: clamp(7.75rem, 34vw, 9.5rem);
+    flex: 0 0 auto;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow:
+      0 8px 18px rgba(0, 0, 0, 0.22),
+      0 0 0 1px rgba(255, 195, 111, 0.12);
+  }
+
+  .hero-actions {
+    grid-area: actions;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.38rem;
+    min-width: 0;
+    padding: 0;
+  }
+
+  .hero-actions .account-link {
+    display: inline-flex;
+    min-width: 0;
+    min-height: 2rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  #impala-edition-name {
+    flex: 1 1 auto;
+    max-width: none;
+    padding: 0;
+    overflow: visible;
+    font-size: var(--mobile-title-font);
+    font-style: italic;
+    font-weight: 600;
+    color: #e7bd78;
+    line-height: 1.28;
+    overflow-wrap: anywhere;
+    text-overflow: clip;
+    white-space: normal;
+  }
+
+  .compact-library-name {
+    grid-area: playlist;
+    align-self: center;
+    display: block;
+    max-width: 100%;
+    margin: -0.08rem 0 0;
+    padding: 0 0.35rem 0.08rem;
+    overflow: hidden;
+    color: #74e6a2;
+    font-size: clamp(1.65rem, 7.5vw, 2.35rem);
+    font-style: normal;
+    font-family: "Segoe Script", "Brush Script MT", cursive;
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    line-height: 1.05;
+    text-align: center;
+    text-overflow: ellipsis;
+    text-shadow: 0 0 10px rgba(67, 229, 132, 0.18);
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    max-height: 2.1em;
+    overflow-wrap: anywhere;
+    white-space: normal;
+  }
+
+  .player-main,
+  .player-frame,
+  .player-stage {
+    min-height: 0;
+  }
+
+  .player-main {
+    grid-area: frame;
+    display: block;
+    height: auto;
+    align-self: start;
+  }
+
+  .player-frame {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    padding: 0.55rem;
+    overflow: hidden;
+  }
+
+  .player-stage {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    gap: 0.42rem;
+  }
+
+  .lcd-display {
+    flex: 0 0 auto;
+    padding: 0.48rem 0.6rem;
+  }
+
+  .transport-controls {
+    flex: 0 0 auto;
+    gap: 0.35rem;
+  }
+
+  .transport-btn[data-action="prev"],
+  .transport-btn[data-action="toggle"],
+  .transport-btn[data-action="next"] {
+    min-height: 3.85rem;
+  }
+
+  .transport-btn[data-action="random"],
+  .transport-btn[data-action="repeat"] {
+    min-height: 1.72rem;
+  }
+
+  .transport-secondary {
+    flex: 0 0 auto;
+  }
+
+  #playlist-selector {
+    min-height: 3rem;
+    padding: 0.38rem 2rem 0.38rem 0.6rem;
+    color: #74bfe2;
+    font-size: clamp(1.2rem, 5.8vw, 1.4rem);
+    text-shadow: 0 0 8px rgba(71, 174, 226, 0.16);
+  }
+
+  #playlist-selector option {
+    font-size: clamp(1.05rem, 3.8vw, 1.3rem);
+  }
+
+  #audioPlayer {
+    width: 100%;
+    height: 2.6rem;
+  }
+
+  .video-screen {
+    flex: 1 1 auto;
+    min-height: 0;
+    max-width: 100%;
+  }
+
+  #videoPlayer {
+    width: 100%;
+    max-height: 100%;
+  }
+
+  .collaboration-panel,
+  .voice-sync-panel,
+  .mkv-bulk-status {
+    max-height: 5.5rem;
+    overflow: auto;
+  }
+
+  .userGuideLink {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-top: auto;
+    gap: 0.3rem;
+  }
+
+  .userGuideLink a,
+  .userGuideLink button {
+    width: 100%;
+    min-width: 0;
+    padding: 0.35rem 0.3rem;
+    font-size: 0.68rem;
+  }
+
+  .userGuideLink a:nth-child(n + 3) {
+    display: none;
+  }
+
+  .userGuideLink > #songList {
+    grid-column: 1 / -1;
+  }
+
+  .userGuideLink > a[href="preferences.html"] {
+    grid-column: 1;
+  }
+
+  .hero-actions.is-mobile-footer {
+    display: contents;
+  }
+
+  .hero-actions.is-mobile-footer .account-link {
+    display: grid;
+    width: 100%;
+    min-width: 0;
+    min-height: 2.45rem;
+    padding: 0.35rem 0.2rem;
+    place-items: center;
+    border-radius: 14px;
+    font-size: var(--mobile-ui-font);
+    text-align: center;
+  }
+
+  .player-aside {
+    display: none !important;
+  }
 }

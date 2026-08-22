@@ -494,6 +494,11 @@ document.addEventListener("DOMContentLoaded", () => {
     return displaySegments.length ? `/${displaySegments.join("/")}` : "/";
   }
 
+  function getLibraryLeafName(prefix) {
+    const segments = getLibraryPathLabel(prefix).split("/").filter(Boolean);
+    return segments[segments.length - 1] || "";
+  }
+
   function getParentPrefix(prefix) {
     const normalizedPath = String(prefix || "").replace(/^\/+/, "").replace(/\/+$/, "");
     if (!normalizedPath) {
@@ -734,6 +739,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const file = String(isStringEntry ? sourcePath : (entry?.file || entry?.path || "")).trim() || sourcePath;
     const mediaType = String(isStringEntry ? "" : (entry?.mediaType || entry?.kind || "")).trim().toLowerCase();
     const contentType = String(isStringEntry ? "" : (entry?.contentType || "")).trim();
+    const metadataRef = isStringEntry ? null : (entry?.metadataRef || null);
+    const artworkOverride = String(isStringEntry ? "" : (entry?.artworkOverride || entry?.posterOverride || "")).trim();
 
     return {
       id: `local-${mode}-${index}-${Math.random().toString(36).slice(2, 8)}`,
@@ -744,7 +751,9 @@ document.addEventListener("DOMContentLoaded", () => {
       objectKey,
       file,
       mediaType,
-      contentType
+      contentType,
+      metadataRef,
+      artworkOverride
     };
   }
 
@@ -820,6 +829,8 @@ document.addEventListener("DOMContentLoaded", () => {
       file: String(entry?.file || objectKey).trim(),
       mediaType,
       contentType: String(entry?.contentType || "").trim(),
+      metadataRef: entry?.metadataRef || null,
+      artworkOverride: String(entry?.artworkOverride || entry?.posterOverride || "").trim(),
       source: "local-service"
     };
   }
@@ -892,7 +903,9 @@ document.addEventListener("DOMContentLoaded", () => {
             albums.set(name, {
               type: "folder",
               name,
-              prefix: getLocalServicePrefix(artist, name)
+              prefix: getLocalServicePrefix(artist, name),
+              metadataRef: track.metadataRef || null,
+              artworkOverride: track.artworkOverride || ""
             });
           }
         });
@@ -1149,6 +1162,8 @@ document.addEventListener("DOMContentLoaded", () => {
       album: String(options.album || "").trim() || parsedSong.album,
       mediaType: String(options.mediaType || getApiMediaScope()).trim(),
       contentType: String(options.contentType || "").trim(),
+      metadataRef: options.metadataRef || null,
+      artworkOverride: String(options.artworkOverride || options.posterOverride || "").trim(),
       source: String(options.source || "s4").trim()
     };
   }
@@ -1170,6 +1185,8 @@ document.addEventListener("DOMContentLoaded", () => {
       file: String(entry.file || "").trim(),
       mediaType: String(entry.mediaType || "").trim(),
       contentType: String(entry.contentType || "").trim(),
+      metadataRef: entry.metadataRef || null,
+      artworkOverride: String(entry.artworkOverride || entry.posterOverride || "").trim(),
       source: String(entry.source || "").trim()
     };
   }
@@ -1591,7 +1608,7 @@ document.addEventListener("DOMContentLoaded", () => {
     combinePlaylistMode = false;
     selectedPlaylistIds.clear();
     currentPlaylistId = playlistId;
-    renderPage();
+    renderPage({ allowLibraryLoad: false });
     setMessage(`Created "${name}" with ${combinedSongs.length} tracks. The original playlists were not changed.`);
   }
 
@@ -1721,7 +1738,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     refreshRegistry();
-    renderPage();
+    renderPage({ allowLibraryLoad: false });
   }
 
   function removeCustomSong(songIndex) {
@@ -1956,7 +1973,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const { addedCount, duplicateCount } = appendSongsToCustomPlaylist(playlistId, songs);
     currentPlaylistId = playlistId;
     refreshRegistry();
-    renderPage();
+    renderPage({ allowLibraryLoad: false });
     setMessage(buildImportMessage(label, name, addedCount, duplicateCount));
   }
 
@@ -2016,7 +2033,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const { addedCount, duplicateCount } = appendSongsToCustomPlaylist(targetPlaylist.id, selectedSongs);
     clearTrackSelections();
     refreshRegistry();
-    renderPage();
+    renderPage({ allowLibraryLoad: false });
     setMessage(buildImportMessage("selected tracks", targetPlaylist.name, addedCount, duplicateCount));
   }
 
@@ -2046,7 +2063,7 @@ document.addEventListener("DOMContentLoaded", () => {
     currentPlaylistId = playlistId;
     clearTrackSelections();
     refreshRegistry();
-    renderPage();
+    renderPage({ allowLibraryLoad: false });
     setMessage(buildImportMessage("selected tracks", chosenName, addedCount, duplicateCount));
   }
 
@@ -2922,6 +2939,28 @@ document.addEventListener("DOMContentLoaded", () => {
       const item = document.createElement("div");
       const isSelected = entry.type === "folder" && entry.prefix === selectedPrefix;
       item.className = `library-song${isSelected ? " is-selected" : ""}${isArtistRow ? " library-artist-item" : ""}${entry.isVideoCollection ? " is-video-collection" : ""}`;
+      const metadataKind = libraryBrowseMode === "video"
+        ? ((!currentPrefix || entry.isVideoCollection) ? "movie" : "")
+        : (!isArtistRow && entry.type === "folder" ? "album" : "");
+      const artworkOverride = String(entry.artworkOverride || entry.posterOverride || "").trim();
+      if (metadataKind || artworkOverride) {
+        item.classList.add("has-metadata-artwork");
+        item.dataset.metadataKind = metadataKind;
+        item.dataset.metadataTitle = entry.name || "";
+        item.dataset.metadataArtist = String(entry.artist || (metadataKind === "album" ? getLibraryLeafName(selectedArtistPrefix) : ""));
+        const metadataRef = entry.metadataRef && typeof entry.metadataRef === "object" ? entry.metadataRef : null;
+        if (metadataRef?.provider) item.dataset.metadataProvider = String(metadataRef.provider);
+        if (metadataRef?.providerId) item.dataset.metadataProviderId = String(metadataRef.providerId);
+        const image = document.createElement("img");
+        image.className = "library-metadata-artwork";
+        image.alt = "";
+        image.loading = "lazy";
+        image.hidden = true;
+        image.addEventListener("load", () => { image.hidden = false; });
+        image.addEventListener("error", () => { image.hidden = true; });
+        if (artworkOverride) image.src = artworkOverride;
+        item.appendChild(image);
+      }
       if (openFolderOnRowClick && entry.type === "folder") {
         item.classList.add("is-clickable-folder");
         item.addEventListener("click", () => {
@@ -2988,10 +3027,17 @@ document.addEventListener("DOMContentLoaded", () => {
     if (target === libraryCurrentList) {
       requestAnimationFrame(updateArtistScrollRail);
     }
+    document.dispatchEvent(new CustomEvent("impala:libraryrender", { detail: { root: target } }));
   }
 
   async function loadCurrentLevel(options = {}) {
     const { force = false } = options;
+    const lastGoodLibraryState = {
+      entries: currentEntries,
+      previewEntries,
+      trackEntries,
+      prefix: currentPrefix
+    };
     const hasSearchTerm = Boolean(librarySearchTerm);
     const localLibraryJson = getLocalLibraryJson();
     const localHelper = getLocalHelperPreferences();
@@ -3188,14 +3234,15 @@ document.addEventListener("DOMContentLoaded", () => {
       renderTracksPane();
       setLibraryStatus("");
     } catch (error) {
-      currentEntries = [];
-      previewEntries = [];
-      trackEntries = [];
-      renderLibraryPath();
-      renderLibraryEntries(libraryCurrentList, []);
-      renderPreviewPane();
-      renderTracksPane();
-      setLibraryStatus(error.message || "Unable to load library.");
+      currentEntries = lastGoodLibraryState.entries;
+      previewEntries = lastGoodLibraryState.previewEntries;
+      trackEntries = lastGoodLibraryState.trackEntries;
+      currentPrefix = lastGoodLibraryState.prefix;
+      currentLoading = false;
+      renderLibraryPanel({ allowLoad: false });
+      setLibraryStatus(currentEntries.length
+        ? `Library refresh interrupted; showing the last loaded catalog. ${error.message || ""}`.trim()
+        : (error.message || "Unable to load library."));
     } finally {
       currentLoading = false;
     }
@@ -3399,14 +3446,15 @@ document.addEventListener("DOMContentLoaded", () => {
     selectAlbum(prefix);
   }
 
-  function renderLibraryPanel() {
+  function renderLibraryPanel(options = {}) {
+    const allowLoad = options.allowLoad !== false;
     updateLibraryModeButtons();
     syncSongListModeClass();
     renderLibraryPath();
 
     const preferredLibrarySource = getPreferredLibrarySource();
 
-    if (preferredLibrarySource !== currentLibrarySource && !currentLoading) {
+    if (allowLoad && preferredLibrarySource !== currentLibrarySource && !currentLoading) {
       currentLibrarySource = preferredLibrarySource;
       currentPrefix = "";
       selectedArtistPrefix = "";
@@ -3424,10 +3472,10 @@ document.addEventListener("DOMContentLoaded", () => {
     if (libraryBrowseMode === "video") {
       if (currentLoading) {
         renderLibraryEmptyState(libraryCurrentList, "Loading videos...");
-      } else if (librarySearchTerm && !currentLoading) {
+      } else if (allowLoad && librarySearchTerm && !currentLoading) {
         loadCurrentLevel({ force: true });
         return;
-      } else if (!currentEntries.length) {
+      } else if (allowLoad && !currentEntries.length) {
         loadCurrentLevel();
         return;
       } else {
@@ -3493,12 +3541,12 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    if (librarySearchTerm && !currentLoading) {
+    if (allowLoad && librarySearchTerm && !currentLoading) {
       loadCurrentLevel({ force: true });
       return;
     }
 
-    if (!folderCache.has(currentPrefix) && !currentLoading) {
+    if (allowLoad && !folderCache.has(currentPrefix) && !currentLoading) {
       loadCurrentLevel();
       return;
     }
@@ -3572,9 +3620,9 @@ document.addEventListener("DOMContentLoaded", () => {
     playlistExpandButton.textContent = playlistExpanded ? "Show 5 Tracks" : "Show Full Playlist";
   }
 
-  function renderPage() {
+  function renderPage(options = {}) {
     renderPlaylistPanel();
-    renderLibraryPanel();
+    renderLibraryPanel({ allowLoad: options.allowLibraryLoad !== false });
     setEditorView(activeEditorView);
   }
 

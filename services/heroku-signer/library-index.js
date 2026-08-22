@@ -152,11 +152,10 @@ export function queryLibraryIndex(records, options = {}) {
 
   if (recursive) {
     const matchingFiles = records
-      .map((record) => record.objectKey)
-      .filter((key) => key && key !== requestedPrefix)
-      .filter((key) => key.startsWith(requestedPrefix))
-      .filter((key) => isAllowedForPrefixes(key, allowedPrefixes))
-      .filter((key) => !isExcludedForPrefixes(key, excludedPrefixes));
+      .filter((record) => record.objectKey && record.objectKey !== requestedPrefix)
+      .filter((record) => record.objectKey.startsWith(requestedPrefix))
+      .filter((record) => isAllowedForPrefixes(record.objectKey, allowedPrefixes))
+      .filter((record) => !isExcludedForPrefixes(record.objectKey, excludedPrefixes));
     const offset = decodeCursor(options.cursor);
     const page = matchingFiles.slice(offset, offset + limit);
     const nextOffset = offset + page.length;
@@ -189,7 +188,7 @@ export function queryLibraryIndex(records, options = {}) {
       const prefix = `${requestedPrefix}${relativePath.slice(0, slashIndex + 1)}`;
       folderMap.set(prefix, { name: getLeafName(prefix), prefix });
     } else {
-      fileMap.set(key, toFileEntry(key));
+      fileMap.set(key, toFileEntry(record));
     }
   }
 
@@ -250,7 +249,7 @@ function searchRecords(records, {
       const fileRank = getSearchMatchRank(key, searchTerm, normalizedSearchTerm);
       if (Number.isFinite(fileRank)) {
         fileMap.set(key, {
-          ...toFileEntry(key),
+          ...toFileEntry(record),
           rank: fileRank + 4
         });
       }
@@ -267,8 +266,15 @@ function searchRecords(records, {
   };
 }
 
-function toFileEntry(objectKey) {
-  return { name: getLeafName(objectKey), objectKey };
+function toFileEntry(recordOrKey) {
+  const record = typeof recordOrKey === "string" ? { objectKey: recordOrKey } : (recordOrKey || {});
+  const objectKey = String(record.objectKey || "");
+  const entry = { name: getLeafName(objectKey), objectKey };
+  if (record.metadataRef) entry.metadataRef = record.metadataRef;
+  if (record.artworkOverride || record.posterOverride) {
+    entry.artworkOverride = record.artworkOverride || record.posterOverride;
+  }
+  return entry;
 }
 
 function encodeCursor(offset) {

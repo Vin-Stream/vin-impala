@@ -105,9 +105,11 @@
 
     function renderHero({ playlist, isLocalServicePlaylist = false } = {}) {
       if (!playlist) {
+        if (elements.compactLibraryName) elements.compactLibraryName.textContent = "Library";
         pageDocument?.body?.classList?.remove("is-local-helper-playlist");
         return;
       }
+      if (elements.compactLibraryName) elements.compactLibraryName.textContent = playlist.name || "Library";
       if (elements.cardTitle) elements.cardTitle.textContent = playlist.name;
       if (elements.cardSubtitle) {
         elements.cardSubtitle.textContent = isLocalServicePlaylist

@@ -84,6 +84,16 @@ test("renders Now Playing and source details", () => {
   assert.match(elements.mediaSourceBadge.attributes.title, /signed cloud URL/);
 });
 
+test("renders the compact header playlist with a Library fallback", () => {
+  const { create, document } = loadView();
+  const compactLibraryName = element();
+  const view = create({ document, elements: { compactLibraryName } });
+  view.renderHero({ playlist: null });
+  assert.equal(compactLibraryName.textContent, "Library");
+  view.renderHero({ playlist: { name: "Family Favorites" } });
+  assert.equal(compactLibraryName.textContent, "Family Favorites");
+});
+
 test("loads player view before the main player", () => {
   const html = fs.readFileSync(path.join(__dirname, "index.html"), "utf8");
   const player = fs.readFileSync(path.join(__dirname, "script.js"), "utf8");
