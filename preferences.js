@@ -33,6 +33,8 @@
   const localHelperCheckButton = document.getElementById("local-helper-check-btn");
   const localHelperConnectButton = document.getElementById("local-helper-connect-btn");
   const localHelperStatusNode = document.getElementById("local-helper-status");
+  const metadataEnabledInput = document.getElementById("metadata-enabled-input");
+  const metadataStatusNode = document.getElementById("metadata-status");
   const mediaRootsApplyButton = document.getElementById("media-roots-apply-btn");
   const mediaRootsResetButton = document.getElementById("media-roots-reset-btn");
   const mediaRootsTestAudioButton = document.getElementById("media-roots-test-audio-btn");
@@ -154,6 +156,20 @@
       ? parsedPort
       : 8089;
     return `http://127.0.0.1:${safePort}`;
+  }
+
+  function setMetadataStatus(enabled) {
+    if (!metadataStatusNode) return;
+    metadataStatusNode.textContent = enabled
+      ? "External metadata is on. Limited album and movie search terms may leave this Impala instance. Reload Player or Library to apply."
+      : "External metadata is off. No metadata or artwork lookups will be made. Reload Player or Library to apply.";
+  }
+
+  function applyMetadataPreference() {
+    if (!metadataEnabledInput) return;
+    const nextPreferences = preferencesApi.setMetadataEnabled(metadataEnabledInput.checked);
+    metadataEnabledInput.checked = nextPreferences.metadataEnabled === true;
+    setMetadataStatus(nextPreferences.metadataEnabled === true);
   }
 
   function configureLocalHelperDownloadLink() {
@@ -718,6 +734,8 @@
     if (localHelperEnabledInput) {
       localHelperEnabledInput.checked = currentPreferences.localHelperEnabled === true;
     }
+    if (metadataEnabledInput) metadataEnabledInput.checked = currentPreferences.metadataEnabled === true;
+    setMetadataStatus(currentPreferences.metadataEnabled === true);
 
     if (localHelperRootInput) {
       localHelperRootInput.value = currentPreferences.localHelperRoot || "";
@@ -890,6 +908,8 @@
     if (localHelperEnabledInput) {
       localHelperEnabledInput.checked = currentPreferences.localHelperEnabled === true;
     }
+    if (metadataEnabledInput) metadataEnabledInput.checked = currentPreferences.metadataEnabled === true;
+    setMetadataStatus(currentPreferences.metadataEnabled === true);
 
     if (localHelperRootInput) {
       localHelperRootInput.value = currentPreferences.localHelperRoot || "";
@@ -955,6 +975,7 @@
         ? "Local Library Companion enabled. Start the helper, then connect or rescan."
         : "Local Library Companion is off.");
     });
+    metadataEnabledInput?.addEventListener("change", applyMetadataPreference);
     localHelperRootInput?.addEventListener("change", saveLocalHelperSettings);
     localHelperPortInput?.addEventListener("change", saveLocalHelperSettings);
     localHelperDownloadLink?.addEventListener("click", (event) => {

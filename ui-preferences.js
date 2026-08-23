@@ -154,6 +154,7 @@
     localHelperEnabled: false,
     localHelperRoot: "",
     localHelperPort: "8089",
+    metadataEnabled: false,
     skipTailSilenceEnabled: false,
     liveStreamEnabled: false,
     syncPlayEnabled: false,
@@ -307,6 +308,7 @@
       localHelperEnabled: sanitizeBoolean(preferences.localHelperEnabled),
       localHelperRoot: sanitizeLocalDirectory(preferences.localHelperRoot),
       localHelperPort: sanitizeLocalHelperPort(preferences.localHelperPort),
+      metadataEnabled: sanitizeBoolean(preferences.metadataEnabled),
       skipTailSilenceEnabled: sanitizeBoolean(preferences.skipTailSilenceEnabled),
       liveStreamEnabled: sanitizeBoolean(preferences.liveStreamEnabled),
       syncPlayEnabled: sanitizeBoolean(preferences.syncPlayEnabled),
@@ -491,6 +493,14 @@
     });
   }
 
+  function setMetadataEnabled(enabled) {
+    const currentPreferences = loadPreferences();
+    return savePreferences({
+      ...currentPreferences,
+      metadataEnabled: sanitizeBoolean(enabled)
+    });
+  }
+
   function setSyncPlaySettings(settings = {}) {
     const currentPreferences = loadPreferences();
     const nextPreferences = savePreferences({
@@ -575,6 +585,7 @@
     setLocalLibraryJson,
     setLocalHelperSettings,
     setSkipTailSilenceEnabled,
+    setMetadataEnabled,
     setLiveStreamEnabled,
     setSyncPlaySettings,
     setCoastSettings,

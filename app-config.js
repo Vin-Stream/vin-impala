@@ -105,6 +105,8 @@ window.ImpalaConfig =
     }
 
     function getMetadataApiUrl() {
+      const preferences = readPreferences();
+      if (preferences.metadataEnabled !== true) return "";
       return cleanUrl(config.metadataApiUrl || "");
     }
 

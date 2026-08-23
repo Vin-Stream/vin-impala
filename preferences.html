@@ -85,6 +85,19 @@
         </div>
       </section>
 
+      <section class="prefs-panel" aria-labelledby="metadata-privacy-heading">
+        <h2 id="metadata-privacy-heading">External Metadata &amp; Artwork</h2>
+        <p>Optional: retrieve album artwork, movie posters, and descriptive metadata from public providers.</p>
+
+        <label class="prefs-toggle" for="metadata-enabled-input">
+          <input id="metadata-enabled-input" type="checkbox" />
+          <span>Enable external metadata and artwork</span>
+        </label>
+
+        <p class="prefs-hint">Off by default. If anonymity matters more than posters and album or movie information, leave this off. When enabled, limited media search terms and ordinary network information are processed by Netlify and public metadata providers. Impala credentials, playlists, and file paths are not sent.</p>
+        <p id="metadata-status" class="prefs-status" aria-live="polite"></p>
+      </section>
+
       <section class="prefs-panel" aria-labelledby="playback-transition-heading">
         <h2 id="playback-transition-heading">Playback Transitions</h2>
         <p>Optional controls for moving cleanly between music tracks.</p>
@@ -287,13 +300,13 @@
     </main>
   </div>
 
-  <script src="app-config.js?v=local-mkv-20260805a"></script>
-  <script src="ui-preferences.js?v=sync-play-20260724a"></script>
+  <script src="app-config.js?v=metadata-privacy-toggle-20260822a"></script>
+  <script src="ui-preferences.js?v=metadata-privacy-toggle-20260822a"></script>
   <script src="playlist-store.js?v=family-playlist-name-20260822a"></script>
   <script src="track-selection-store.js"></script>
   <script src="player-state-store.js?v=local-mkv-20260805a"></script>
   <script src="identity-backup.js?v=backup-status-20260626"></script>
-  <script src="preferences.js?v=local-mkv-20260805a"></script>
+  <script src="preferences.js?v=metadata-privacy-toggle-20260822a"></script>
 </body>
 
 </html>
