@@ -374,6 +374,10 @@ body {
   white-space: nowrap;
 }
 
+.playlist-list-item strong {
+  color: #26343d;
+}
+
 .playlist-list-item span {
   color: var(--muted);
   font-size: 0.82rem;
@@ -385,8 +389,12 @@ body {
 }
 
 .playlist-list-item.is-active strong {
-  color: #e9f6ff;
+  color: #fff8ea;
   text-shadow: 0 0 12px rgba(154, 211, 255, 0.55);
+}
+
+.playlist-list-item:not(.is-active) .playlist-list-copy > span {
+  color: #b58ae8;
 }
 
 .playlist-list-empty {
@@ -4658,6 +4666,7 @@ body.is-video-mode .library-song-select span {
   display: grid;
   min-width: 0;
   gap: 0.18rem;
+  
 }
 
 .playlist-artwork-poster {
