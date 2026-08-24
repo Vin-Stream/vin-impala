@@ -394,7 +394,7 @@ body {
 }
 
 .playlist-list-item:not(.is-active) .playlist-list-copy > span {
-  color: #b58ae8;
+  color: #3b4f66;
 }
 
 .playlist-list-empty {
@@ -2884,7 +2884,7 @@ body.is-audio-mode #audioPlayer {
   min-width: 0;
   max-width: 70%;
   display: block;
-  color: var(--muted);
+  color: #3b4f66;
   font-size: 0.88rem;
   text-align: right;
   overflow: hidden;
@@ -2979,7 +2979,7 @@ body.is-audio-mode #audioPlayer {
 
 .library-song-select span {
   min-width: 0;
-  color: var(--muted);
+  color: #3b4f66;
   font-size: 0.84rem;
   overflow-wrap: anywhere;
 }
