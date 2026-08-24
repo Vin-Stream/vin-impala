@@ -2200,6 +2200,18 @@ body.is-audio-mode #audioPlayer {
   gap: 0.35rem;
 }
 
+.song-list-page .titles-container {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  margin: -1.5rem -1.5rem 0.5rem;
+  padding: 1.1rem 1.5rem 0.6rem;
+  background: var(--card-bg);
+  border-radius: 24px 24px 0 0;
+  border-bottom: 1px solid var(--card-border);
+  box-shadow: 0 12px 18px -14px rgba(0, 0, 0, 0.5);
+}
+
 .titles-row {
   display: flex;
   align-items: center;
@@ -3014,6 +3026,11 @@ body.is-video-mode .library-song-select span {
       "hero"
       "player"
       "copy";
+  }
+
+  #library-preview-heading,
+  #library-tracks-heading {
+    scroll-margin-top: 5rem;
   }
 
   .playlist-panel #song-list {
