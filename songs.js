@@ -1,173 +1,5 @@
 const songs = [
     {
-        "name": "01 Walk On Water (feat. Beyoncé).mp3",
-        "artist": "Eminem",
-        "objectKey": "Eminem/Revival/01 Walk On Water (feat. Beyoncé).mp3",
-        "play": true
-    },
-    {
-        "name": "02 Believe.mp3",
-        "artist": "Eminem",
-        "album": "Revival",
-        "objectKey": "Eminem/Revival/02 Believe.mp3",
-        "play": true,
-        "mediaType": "audio",
-        "source": "s4"
-    },
-    {
-        "name": "03 Chloraseptic (feat. PHRESHER).mp3",
-        "artist": "Eminem",
-        "album": "Revival",
-        "objectKey": "Eminem/Revival/03 Chloraseptic (feat. PHRESHER).mp3",
-        "play": true,
-        "mediaType": "audio",
-        "source": "s4"
-    },
-    {
-        "name": "04 Untouchable.mp3",
-        "artist": "Eminem",
-        "album": "Revival",
-        "objectKey": "Eminem/Revival/04 Untouchable.mp3",
-        "play": true,
-        "mediaType": "audio",
-        "source": "s4"
-    },
-    {
-        "name": "05 River (feat. Ed Sheeran).mp3",
-        "artist": "Eminem",
-        "album": "Revival",
-        "objectKey": "Eminem/Revival/05 River (feat. Ed Sheeran).mp3",
-        "play": true,
-        "mediaType": "audio",
-        "source": "s4"
-    },
-    {
-        "name": "06 Remind Me (Intro).mp3",
-        "artist": "Eminem",
-        "album": "Revival",
-        "objectKey": "Eminem/Revival/06 Remind Me (Intro).mp3",
-        "play": true,
-        "mediaType": "audio",
-        "source": "s4"
-    },
-    {
-        "name": "07 Remind Me.mp3",
-        "artist": "Eminem",
-        "album": "Revival",
-        "objectKey": "Eminem/Revival/07 Remind Me.mp3",
-        "play": true,
-        "mediaType": "audio",
-        "source": "s4"
-    },
-    {
-        "name": "08 Revival (Interlude).mp3",
-        "artist": "Eminem",
-        "album": "Revival",
-        "objectKey": "Eminem/Revival/08 Revival (Interlude).mp3",
-        "play": true,
-        "mediaType": "audio",
-        "source": "s4"
-    },
-    {
-        "name": "09 Like Home (feat. Alicia Keys).mp3",
-        "artist": "Eminem",
-        "album": "Revival",
-        "objectKey": "Eminem/Revival/09 Like Home (feat. Alicia Keys).mp3",
-        "play": true,
-        "mediaType": "audio",
-        "source": "s4"
-    },
-    {
-        "name": "10 Bad Husband (feat. X Ambassadors).mp3",
-        "artist": "Eminem",
-        "album": "Revival",
-        "objectKey": "Eminem/Revival/10 Bad Husband (feat. X Ambassadors).mp3",
-        "play": true,
-        "mediaType": "audio",
-        "source": "s4"
-    },
-    {
-        "name": "11 Tragic Endings (feat. Skylar Grey.mp3",
-        "artist": "Eminem",
-        "album": "Revival",
-        "objectKey": "Eminem/Revival/11 Tragic Endings (feat. Skylar Grey.mp3",
-        "play": true,
-        "mediaType": "audio",
-        "source": "s4"
-    },
-    {
-        "name": "12 Framed.mp3",
-        "artist": "Eminem",
-        "album": "Revival",
-        "objectKey": "Eminem/Revival/12 Framed.mp3",
-        "play": true,
-        "mediaType": "audio",
-        "source": "s4"
-    },
-    {
-        "name": "13 Nowhere Fast (feat. Kehlani).mp3",
-        "artist": "Eminem",
-        "album": "Revival",
-        "objectKey": "Eminem/Revival/13 Nowhere Fast (feat. Kehlani).mp3",
-        "play": true,
-        "mediaType": "audio",
-        "source": "s4"
-    },
-    {
-        "name": "14 Heat.mp3",
-        "artist": "Eminem",
-        "album": "Revival",
-        "objectKey": "Eminem/Revival/14 Heat.mp3",
-        "play": true,
-        "mediaType": "audio",
-        "source": "s4"
-    },
-    {
-        "name": "15 Offended.mp3",
-        "artist": "Eminem",
-        "album": "Revival",
-        "objectKey": "Eminem/Revival/15 Offended.mp3",
-        "play": true,
-        "mediaType": "audio",
-        "source": "s4"
-    },
-    {
-        "name": "16 Need Me (feat. P!nk).mp3",
-        "artist": "Eminem",
-        "album": "Revival",
-        "objectKey": "Eminem/Revival/16 Need Me (feat. P!nk).mp3",
-        "play": true,
-        "mediaType": "audio",
-        "source": "s4"
-    },
-    {
-        "name": "17 In Your Head.mp3",
-        "artist": "Eminem",
-        "album": "Revival",
-        "objectKey": "Eminem/Revival/17 In Your Head.mp3",
-        "play": true,
-        "mediaType": "audio",
-        "source": "s4"
-    },
-    {
-        "name": "18 Castle.mp3",
-        "artist": "Eminem",
-        "album": "Revival",
-        "objectKey": "Eminem/Revival/18 Castle.mp3",
-        "play": true,
-        "mediaType": "audio",
-        "source": "s4"
-    },
-    {
-        "name": "19 Arose.mp3",
-        "artist": "Eminem",
-        "album": "Revival",
-        "objectKey": "Eminem/Revival/19 Arose.mp3",
-        "play": true,
-        "mediaType": "audio",
-        "source": "s4"
-    },
-    {
         "name": "01 - Better Together.mp3",
         "artist": "OriginalMusic",
         "album": "Comp",
@@ -1963,6 +1795,174 @@ const songs = [
         "artist": "OriginalMusic",
         "album": "Comp",
         "objectKey": "OriginalMusic/Comp/i Feel Love, DS.mp3",
+        "play": true,
+        "mediaType": "audio",
+        "source": "s4"
+    },
+    {
+        "name": "01 Walk On Water (feat. Beyoncé).mp3",
+        "artist": "Eminem",
+        "objectKey": "Eminem/Revival/01 Walk On Water (feat. Beyoncé).mp3",
+        "play": true
+    },
+    {
+        "name": "02 Believe.mp3",
+        "artist": "Eminem",
+        "album": "Revival",
+        "objectKey": "Eminem/Revival/02 Believe.mp3",
+        "play": true,
+        "mediaType": "audio",
+        "source": "s4"
+    },
+    {
+        "name": "03 Chloraseptic (feat. PHRESHER).mp3",
+        "artist": "Eminem",
+        "album": "Revival",
+        "objectKey": "Eminem/Revival/03 Chloraseptic (feat. PHRESHER).mp3",
+        "play": true,
+        "mediaType": "audio",
+        "source": "s4"
+    },
+    {
+        "name": "04 Untouchable.mp3",
+        "artist": "Eminem",
+        "album": "Revival",
+        "objectKey": "Eminem/Revival/04 Untouchable.mp3",
+        "play": true,
+        "mediaType": "audio",
+        "source": "s4"
+    },
+    {
+        "name": "05 River (feat. Ed Sheeran).mp3",
+        "artist": "Eminem",
+        "album": "Revival",
+        "objectKey": "Eminem/Revival/05 River (feat. Ed Sheeran).mp3",
+        "play": true,
+        "mediaType": "audio",
+        "source": "s4"
+    },
+    {
+        "name": "06 Remind Me (Intro).mp3",
+        "artist": "Eminem",
+        "album": "Revival",
+        "objectKey": "Eminem/Revival/06 Remind Me (Intro).mp3",
+        "play": true,
+        "mediaType": "audio",
+        "source": "s4"
+    },
+    {
+        "name": "07 Remind Me.mp3",
+        "artist": "Eminem",
+        "album": "Revival",
+        "objectKey": "Eminem/Revival/07 Remind Me.mp3",
+        "play": true,
+        "mediaType": "audio",
+        "source": "s4"
+    },
+    {
+        "name": "08 Revival (Interlude).mp3",
+        "artist": "Eminem",
+        "album": "Revival",
+        "objectKey": "Eminem/Revival/08 Revival (Interlude).mp3",
+        "play": true,
+        "mediaType": "audio",
+        "source": "s4"
+    },
+    {
+        "name": "09 Like Home (feat. Alicia Keys).mp3",
+        "artist": "Eminem",
+        "album": "Revival",
+        "objectKey": "Eminem/Revival/09 Like Home (feat. Alicia Keys).mp3",
+        "play": true,
+        "mediaType": "audio",
+        "source": "s4"
+    },
+    {
+        "name": "10 Bad Husband (feat. X Ambassadors).mp3",
+        "artist": "Eminem",
+        "album": "Revival",
+        "objectKey": "Eminem/Revival/10 Bad Husband (feat. X Ambassadors).mp3",
+        "play": true,
+        "mediaType": "audio",
+        "source": "s4"
+    },
+    {
+        "name": "11 Tragic Endings (feat. Skylar Grey.mp3",
+        "artist": "Eminem",
+        "album": "Revival",
+        "objectKey": "Eminem/Revival/11 Tragic Endings (feat. Skylar Grey.mp3",
+        "play": true,
+        "mediaType": "audio",
+        "source": "s4"
+    },
+    {
+        "name": "12 Framed.mp3",
+        "artist": "Eminem",
+        "album": "Revival",
+        "objectKey": "Eminem/Revival/12 Framed.mp3",
+        "play": true,
+        "mediaType": "audio",
+        "source": "s4"
+    },
+    {
+        "name": "13 Nowhere Fast (feat. Kehlani).mp3",
+        "artist": "Eminem",
+        "album": "Revival",
+        "objectKey": "Eminem/Revival/13 Nowhere Fast (feat. Kehlani).mp3",
+        "play": true,
+        "mediaType": "audio",
+        "source": "s4"
+    },
+    {
+        "name": "14 Heat.mp3",
+        "artist": "Eminem",
+        "album": "Revival",
+        "objectKey": "Eminem/Revival/14 Heat.mp3",
+        "play": true,
+        "mediaType": "audio",
+        "source": "s4"
+    },
+    {
+        "name": "15 Offended.mp3",
+        "artist": "Eminem",
+        "album": "Revival",
+        "objectKey": "Eminem/Revival/15 Offended.mp3",
+        "play": true,
+        "mediaType": "audio",
+        "source": "s4"
+    },
+    {
+        "name": "16 Need Me (feat. P!nk).mp3",
+        "artist": "Eminem",
+        "album": "Revival",
+        "objectKey": "Eminem/Revival/16 Need Me (feat. P!nk).mp3",
+        "play": true,
+        "mediaType": "audio",
+        "source": "s4"
+    },
+    {
+        "name": "17 In Your Head.mp3",
+        "artist": "Eminem",
+        "album": "Revival",
+        "objectKey": "Eminem/Revival/17 In Your Head.mp3",
+        "play": true,
+        "mediaType": "audio",
+        "source": "s4"
+    },
+    {
+        "name": "18 Castle.mp3",
+        "artist": "Eminem",
+        "album": "Revival",
+        "objectKey": "Eminem/Revival/18 Castle.mp3",
+        "play": true,
+        "mediaType": "audio",
+        "source": "s4"
+    },
+    {
+        "name": "19 Arose.mp3",
+        "artist": "Eminem",
+        "album": "Revival",
+        "objectKey": "Eminem/Revival/19 Arose.mp3",
         "play": true,
         "mediaType": "audio",
         "source": "s4"
