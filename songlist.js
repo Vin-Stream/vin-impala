@@ -2939,6 +2939,8 @@ document.addEventListener("DOMContentLoaded", () => {
       suppressFolderActions = false
     } = options;
     target.innerHTML = "";
+    const usesVideoTiles = libraryBrowseMode === "video";
+    target.classList.toggle("is-video-tile-grid", usesVideoTiles);
 
     if (!entries.length) {
       renderLibraryEmptyState(
@@ -2952,10 +2954,40 @@ document.addEventListener("DOMContentLoaded", () => {
       const item = document.createElement("div");
       const isSelected = entry.type === "folder" && entry.prefix === selectedPrefix;
       item.className = `library-song${isSelected ? " is-selected" : ""}${isArtistRow ? " library-artist-item" : ""}${entry.isVideoCollection ? " is-video-collection" : ""}`;
+      if (usesVideoTiles) item.classList.add("library-video-tile");
       const metadataKind = libraryBrowseMode === "video"
         ? ((!currentPrefix || entry.isVideoCollection) ? "movie" : "")
         : (!isArtistRow && entry.type === "folder" ? "album" : "");
       const artworkOverride = String(entry.artworkOverride || entry.posterOverride || "").trim();
+      let artworkTarget = item;
+      if (usesVideoTiles) {
+        const poster = document.createElement("button");
+        poster.type = "button";
+        poster.className = "library-video-poster";
+        poster.setAttribute("aria-label", `${entry.type === "folder" ? "Open" : "Play"} ${entry.name}`);
+        const fallback = document.createElement("span");
+        fallback.className = "library-video-poster-fallback";
+        fallback.setAttribute("aria-hidden", "true");
+        const fallbackBrand = document.createElement("span");
+        fallbackBrand.className = "library-video-poster-brand";
+        fallbackBrand.textContent = "Impala";
+        const fallbackKind = document.createElement("span");
+        fallbackKind.className = "library-video-poster-kind";
+        fallbackKind.textContent = entry.type === "folder" ? "Video Collection" : "Video Library";
+        fallback.append(fallbackBrand, fallbackKind);
+        poster.appendChild(fallback);
+        poster.addEventListener("click", (event) => {
+          event.stopPropagation();
+          if (entry.type === "folder") {
+            if (folderClickAction === "open") options.onOpen?.(entry.prefix, entry);
+            else options.onSelect?.(entry.prefix);
+          } else {
+            options.onFileClick?.(entry, index);
+          }
+        });
+        item.appendChild(poster);
+        artworkTarget = poster;
+      }
       if (metadataKind || artworkOverride) {
         item.classList.add("has-metadata-artwork");
         item.dataset.metadataKind = metadataKind;
@@ -2969,10 +3001,16 @@ document.addEventListener("DOMContentLoaded", () => {
         image.alt = "";
         image.loading = "lazy";
         image.hidden = true;
-        image.addEventListener("load", () => { image.hidden = false; });
-        image.addEventListener("error", () => { image.hidden = true; });
+        image.addEventListener("load", () => {
+          image.hidden = false;
+          artworkTarget.classList.add("has-artwork");
+        });
+        image.addEventListener("error", () => {
+          image.hidden = true;
+          artworkTarget.classList.remove("has-artwork");
+        });
         if (artworkOverride) image.src = artworkOverride;
-        item.appendChild(image);
+        artworkTarget.appendChild(image);
       }
       if (openFolderOnRowClick && entry.type === "folder") {
         item.classList.add("is-clickable-folder");
