@@ -4845,7 +4845,9 @@ body.is-video-mode .library-song-select span {
   }
 
   body.player-page {
-    height: 100%;
+    box-sizing: border-box;
+    min-height: 100dvh;
+    height: 100dvh;
     overflow: hidden;
   }
 
@@ -4880,6 +4882,10 @@ body.is-video-mode .library-song-select span {
 
   .card-hero {
     display: block;
+    align-self: start;
+    min-height: 0;
+    height: max-content;
+    max-height: none;
     padding: 0.05rem 0.58rem 0.28rem;
     border: 1px solid var(--card-border);
     border-radius: 22px;
@@ -5046,6 +5052,7 @@ body.is-video-mode .library-song-select span {
     z-index: 1;
     display: block;
     width: 1.5rem;
+    pointer-events: none;
   }
 
   .lcd-source-stack .media-source-badge {
@@ -5074,6 +5081,8 @@ body.is-video-mode .library-song-select span {
     text-shadow: 0 0 7px rgba(246, 251, 208, 0.5);
     transform: translate(-50%, -50%) !important;
     transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    pointer-events: auto;
+    touch-action: manipulation;
   }
 
   .mobile-current-star-btn:hover:not(:disabled),
@@ -5189,6 +5198,10 @@ body.is-video-mode .library-song-select span {
   .mobile-starred-actions button:disabled {
     cursor: default;
     opacity: 0.42;
+  }
+
+  .mobile-starred-actions + .userGuideLink {
+    margin-top: 0.55rem;
   }
 
   .userGuideLink a,

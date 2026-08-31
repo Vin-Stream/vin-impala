@@ -775,6 +775,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function toggleCurrentTrackStar() {
     if (!currentPlaylist || !currentPlaylist.songs[currentSongIndex]) {
+      showPlayerToast("Choose or play a track before starring it.");
       return;
     }
 
@@ -843,7 +844,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (mobileNewStarredButton) mobileNewStarredButton.disabled = !hasSelection;
 
     if (mobileCurrentStarButton) {
-      mobileCurrentStarButton.disabled = !currentSong;
+      mobileCurrentStarButton.disabled = false;
       mobileCurrentStarButton.textContent = currentIsStarred ? "\u2605" : "\u2606";
       mobileCurrentStarButton.setAttribute("aria-pressed", String(currentIsStarred));
       mobileCurrentStarButton.setAttribute(
@@ -1031,6 +1032,18 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   placeAccountActionsForViewport();
   compactHeaderQuery?.addEventListener?.("change", placeAccountActionsForViewport);
+
+  let compactHeaderRefreshFrame = 0;
+  function refreshCompactHeaderAfterViewportChange() {
+    window.cancelAnimationFrame?.(compactHeaderRefreshFrame);
+    compactHeaderRefreshFrame = window.requestAnimationFrame?.(() => {
+      compactHeaderRefreshFrame = window.requestAnimationFrame?.(() => {
+        placeAccountActionsForViewport();
+      }) || 0;
+    }) || 0;
+  }
+  window.addEventListener("orientationchange", refreshCompactHeaderAfterViewportChange);
+  window.visualViewport?.addEventListener?.("resize", refreshCompactHeaderAfterViewportChange);
 
   function updateHeroCopy() {
     playerView.renderHero({
