@@ -6,7 +6,8 @@ window.KW_PLAYER_CONFIG = window.KW_PLAYER_CONFIG || {
   syncPlayApiBaseUrl: "",
   coastApiBaseUrl: "",
   // Public, read-only metadata sidecar; private playback remains on Family services.
-  metadataApiUrl: "https://impala-streamer-netlify.netlify.app/api/metadata",
+  metadataApiUrl:
+    "https://family-impala-metadata-93d758b55ecd.herokuapp.com/api/metadata",
   authStorageKey: "impalaFamily.authSession",
   playlistStoragePrefix: "impalaFamily",
   instanceStorageId: "",

@@ -1129,6 +1129,22 @@ body.is-video-mode .library-song-select span {
   line-height: 1.55;
 }
 
+.about-section a {
+  color: var(--accent);
+}
+
+.tmdb-credit {
+  display: inline-flex;
+  width: max-content;
+  border-radius: 8px;
+}
+
+.tmdb-credit img {
+  display: block;
+  width: 3.25rem;
+  height: 3.25rem;
+}
+
 .about-identity {
   grid-template-columns: auto minmax(0, 1fr);
   align-items: center;
