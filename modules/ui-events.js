@@ -9,6 +9,9 @@
     elements.playerNewStarredButton?.addEventListener("click", () => actions.onNewStarred?.());
     elements.playerManageStarredButton?.addEventListener("click", () => actions.onManageStarred?.());
     elements.playerClearStarredButton?.addEventListener("click", () => actions.onClearStarred?.());
+    elements.mobileCurrentStarButton?.addEventListener("click", () => actions.onToggleCurrentStar?.());
+    elements.mobileAddStarredButton?.addEventListener("click", () => actions.onAddStarred?.());
+    elements.mobileNewStarredButton?.addEventListener("click", () => actions.onNewStarred?.());
     elements.trackFilterInput?.addEventListener("input", (event) => actions.onTrackFilter?.(event.target.value));
     elements.scrollPlayingButton?.addEventListener("click", () => actions.onScrollPlaying?.());
     elements.videoResumeButton?.addEventListener("click", () => actions.onVideoResume?.());

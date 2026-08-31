@@ -46,6 +46,25 @@ test("routes playlist, filter, and transport events to player actions", () => {
   assert.deepEqual(calls, [["playlist", "video"], ["filter", "arcane"], ["transport", "next"]]);
 });
 
+test("routes compact mobile starred controls to the shared player actions", () => {
+  const mobileCurrentStarButton = target();
+  const mobileAddStarredButton = target();
+  const mobileNewStarredButton = target();
+  const calls = [];
+  loadModule().bind({
+    elements: { mobileCurrentStarButton, mobileAddStarredButton, mobileNewStarredButton },
+    actions: {
+      onToggleCurrentStar() { calls.push("toggle"); },
+      onAddStarred() { calls.push("add"); },
+      onNewStarred() { calls.push("new"); }
+    }
+  });
+  mobileCurrentStarButton.dispatch("click");
+  mobileAddStarredButton.dispatch("click");
+  mobileNewStarredButton.dispatch("click");
+  assert.deepEqual(calls, ["toggle", "add", "new"]);
+});
+
 test("normalizes credentials before routing sign in", () => {
   const authForm = target();
   const calls = [];

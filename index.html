@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Impala Streamer</title>
-    <link rel="stylesheet" href="styles.css?v=mobile-gold-edition-20260822a" />
+    <link rel="stylesheet" href="styles.css?v=mobile-starred-controls-20260830c" />
     <link rel="icon" href="./assets/ddMusic.ico" />
     <script src="app-config.js?v=metadata-privacy-toggle-20260822a"></script>
     <script src="auth-session.js"></script>
@@ -58,13 +58,24 @@
             <div class="player-stage">
               <div class="lcd-display" id="lcdDisplay">
                 <div class="lcd-status-row">
-                  <span
-                    id="media-source-badge"
-                    class="media-source-badge"
-                    aria-label="Media source"
-                    title="Media source"
-                    >-</span
-                  >
+                  <span class="lcd-source-stack">
+                    <span
+                      id="media-source-badge"
+                      class="media-source-badge"
+                      aria-label="Media source"
+                      title="Media source"
+                      >-</span
+                    >
+                    <button
+                      type="button"
+                      id="mobile-current-star-btn"
+                      class="mobile-current-star-btn"
+                      aria-label="Star current track"
+                      title="Star current track"
+                      aria-pressed="false"
+                      disabled
+                    >&#9734;</button>
+                  </span>
                   <span id="status" class="lcd-playback-status">Paused</span>
                   <span class="lcd-mode-indicators" aria-label="Playback modes">
                     <span id="lcd-shuffle-indicator" class="lcd-mode-indicator" hidden>Shuffle</span>
@@ -228,6 +239,11 @@
               </details>
 
               <audio id="audioPlayer" controls></audio>
+            </div>
+            <div class="mobile-starred-actions" aria-label="Starred track playlist controls">
+              <span id="mobile-starred-count" class="mobile-starred-count">0 starred</span>
+              <button type="button" id="mobile-new-starred-btn" disabled>New From Starred</button>
+              <button type="button" id="mobile-add-starred-btn" disabled>Add Starred</button>
             </div>
             <div class="userGuideLink">
               <a href="songlist.html" id="songList">Library & Playlists</a>
@@ -478,7 +494,7 @@
     <script src="modules/media-session.js?v=media-session-20260813a"></script>
     <script src="ambient-identity.js?v=ambient-identity-20260629"></script>
     <script src="metadata-client.js?v=metadata-sidecar-20260822a"></script>
-    <script src="script.js?v=metadata-sidecar-20260822a"></script>
+    <script src="script.js?v=mobile-starred-controls-20260830a"></script>
     <script src="feedback.js?v=v1-system-support-20260725a"></script>
   </body>
 </html>

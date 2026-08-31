@@ -31,6 +31,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const playerNewStarredButton = document.getElementById("player-new-starred-btn");
   const playerManageStarredButton = document.getElementById("player-manage-starred-btn");
   const playerClearStarredButton = document.getElementById("player-clear-starred-btn");
+  const mobileCurrentStarButton = document.getElementById("mobile-current-star-btn");
+  const mobileStarredCount = document.getElementById("mobile-starred-count");
+  const mobileAddStarredButton = document.getElementById("mobile-add-starred-btn");
+  const mobileNewStarredButton = document.getElementById("mobile-new-starred-btn");
   const transportButtons = document.querySelectorAll("[data-action]");
   const repeatModeButton = document.getElementById("repeat-mode-btn");
   const randomModeButton = document.querySelector('[data-action="random"]');
@@ -822,23 +826,34 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function updatePlayerStarredUi() {
-    if (
-      !playerStarredCount
-      || !playerAddStarredButton
-      || !playerNewStarredButton
-      || !playerManageStarredButton
-      || !playerClearStarredButton
-    ) {
-      return;
-    }
-
     const selectedCount = getSelectedSongCount(currentPlaylist);
-    playerStarredCount.textContent = `${selectedCount} starred`;
     const hasSelection = selectedCount > 0;
-    playerAddStarredButton.disabled = !hasSelection;
-    playerNewStarredButton.disabled = !hasSelection;
-    playerManageStarredButton.disabled = !hasSelection;
-    playerClearStarredButton.disabled = !hasSelection;
+    const currentSong = currentPlaylist?.songs?.[currentSongIndex] || null;
+    const currentIsStarred = Boolean(
+      currentSong && isTrackSelected(currentPlaylist.id, currentSong, currentSongIndex)
+    );
+
+    if (playerStarredCount) playerStarredCount.textContent = `${selectedCount} starred`;
+    if (mobileStarredCount) mobileStarredCount.textContent = `${selectedCount} starred`;
+    if (playerAddStarredButton) playerAddStarredButton.disabled = !hasSelection;
+    if (playerNewStarredButton) playerNewStarredButton.disabled = !hasSelection;
+    if (playerManageStarredButton) playerManageStarredButton.disabled = !hasSelection;
+    if (playerClearStarredButton) playerClearStarredButton.disabled = !hasSelection;
+    if (mobileAddStarredButton) mobileAddStarredButton.disabled = !hasSelection;
+    if (mobileNewStarredButton) mobileNewStarredButton.disabled = !hasSelection;
+
+    if (mobileCurrentStarButton) {
+      mobileCurrentStarButton.disabled = !currentSong;
+      mobileCurrentStarButton.textContent = currentIsStarred ? "\u2605" : "\u2606";
+      mobileCurrentStarButton.setAttribute("aria-pressed", String(currentIsStarred));
+      mobileCurrentStarButton.setAttribute(
+        "aria-label",
+        currentIsStarred ? "Remove star from current track" : "Star current track"
+      );
+      mobileCurrentStarButton.title = currentIsStarred
+        ? "Remove star from current track"
+        : "Star current track";
+    }
   }
 
   function getMediaInfo(song) {
@@ -996,6 +1011,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.dispatchEvent(new CustomEvent("impala:mediachange", {
       detail: { media: song, mediaKind: getMediaInfo(song)?.mediaKind }
     }));
+    updatePlayerStarredUi();
   }
 
   if (editionName) {
@@ -1568,6 +1584,9 @@ document.addEventListener("DOMContentLoaded", () => {
       playerNewStarredButton,
       playerManageStarredButton,
       playerClearStarredButton,
+      mobileCurrentStarButton,
+      mobileAddStarredButton,
+      mobileNewStarredButton,
       trackFilterInput,
       scrollPlayingButton,
       videoResumeButton,
@@ -1589,6 +1608,7 @@ document.addEventListener("DOMContentLoaded", () => {
       onNewStarred: createPlaylistFromStarred,
       onManageStarred() { window.location.href = "songlist.html"; },
       onClearStarred: clearStarredTracks,
+      onToggleCurrentStar: toggleCurrentTrackStar,
       onTrackFilter: filterTracks,
       onScrollPlaying: scrollCurrentTrackIntoView,
       onVideoResume: resumeCurrentVideo,
