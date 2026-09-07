@@ -1,18 +1,36 @@
 const songs = [
     {
-        "name": "01 - Better Together.mp3",
-        "artist": "OriginalMusic",
-        "album": "Comp",
-        "objectKey": "OriginalMusic/Comp/01 - Better Together.mp3",
+        "name": "Never Ever",
+        "artist": "!A-singleSongs",
+        "album": "All Saints",
+        "objectKey": "!A-singleSongs/All Saints/Never Ever.mp3",
         "play": true,
         "mediaType": "audio",
         "source": "s4"
     },
     {
-        "name": "01 Another One Bites The Dust (2011.mp3",
-        "artist": "OriginalMusic",
-        "album": "Comp",
-        "objectKey": "OriginalMusic/Comp/01 Another One Bites The Dust (2011.mp3",
+        "name": "Blood In The Cut",
+        "artist": "!A-singleSongs",
+        "album": "K.Flay",
+        "objectKey": "!A-singleSongs/K.Flay/Blood in the Cut.mp3",
+        "play": true,
+        "mediaType": "audio",
+        "source": "s4"
+    },
+    {
+        "name": "Miss You",
+        "artist": "!A-singleSongs",
+        "album": "Oliver Tree",
+        "objectKey": "!A-singleSongs/Oliver Tree/14. Miss You.flac",
+        "play": true,
+        "mediaType": "audio",
+        "source": "s4"
+    },
+    {
+        "name": "Self Aware",
+        "artist": "!A-singleSongs",
+        "album": "Temper City",
+        "objectKey": "!A-singleSongs/Temper City/Self Aware.mp3",
         "play": true,
         "mediaType": "audio",
         "source": "s4"
