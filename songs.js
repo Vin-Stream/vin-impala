@@ -1,9 +1,9 @@
 const songs = [
     {
         "name": "Made of Stone",
-        "artist": "Stone Roses",
-        "album": "The Stone Roses",
-        "objectKey": "Stone Roses/The Stone Roses - 1989/09 - Made Of Stone.flac",
+        "artist": "The Stone Roses",
+        "album": "CD 1- 2009 Remaster",
+        "objectKey": "The Stone Roses/CD 1- 2009 Remaster/08  - Made Of Stone.mp3",
         "play": true,
         "mediaType": "audio",
         "source": "s4"
