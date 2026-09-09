@@ -1,5 +1,14 @@
 const songs = [
     {
+        "name": "Made of Stone",
+        "artist": "Stone Roses",
+        "album": "The Stone Roses",
+        "objectKey": "Stone Roses/The Stone Roses - 1989/09 - Made Of Stone.flac",
+        "play": true,
+        "mediaType": "audio",
+        "source": "s4"
+    },
+    {
         "name": "Never Ever",
         "artist": "!A-singleSongs",
         "album": "All Saints",
