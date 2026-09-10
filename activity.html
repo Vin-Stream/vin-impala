@@ -31,14 +31,12 @@
 <body>
   <main>
     <a href="index.html" class="back-button" class="family-activity-button">Back to player</a>
-    <h1>Family activity</h1>
-    <p>Review inactive invitees and accounts to follow up with. Device counts cover the last 30 days (up to 32 browser identities). Overlap means different devices checked in within four minutes.</p>
-    <p>Tracking begins with this update. “No activity recorded” does not describe earlier use. Clearing browser data can create a new device identity.</p>
+    <h1>Impala-Family activity</h1>
     <button id="refresh" type="button">Refresh</button>
     <p id="status" role="status"></p>
     <div class="table-scroll">
       <table hidden id="activity-table">
-        <caption>Current allowed users</caption>
+        <caption>Current allowed users as defined in ALLOWED_USERS_JSON</caption>
         <thead><tr><th>User</th><th>Last login</th><th>Last active</th><th>Logins</th><th>Recent devices</th><th>Follow-up</th></tr></thead>
         <tbody id="activity-rows"></tbody>
       </table>
