@@ -1,3 +1,5 @@
+import "./local-env.js";
+import { createActivityStore, mountActivity } from "./activity.js";
 import crypto from "node:crypto";
 import express from "express";
 import cors from "cors";
@@ -64,6 +66,7 @@ if (!process.env.S4_ACCESS_KEY_ID || !process.env.S4_SECRET_ACCESS_KEY) {
 }
 
 const users = parseUsers(process.env.ALLOWED_USERS_JSON || "[]");
+const activityStore = createActivityStore({ uri: process.env.MONGODB_URI, database: process.env.MONGODB_DATABASE || "impala_family" });
 
 const s3Client = new S3Client({
   region: s4Region,
@@ -128,6 +131,8 @@ app.use(cors({
     callback(corsError);
   }
 }));
+
+mountActivity(app, { store: activityStore, users, requireAuth, requireAdmin });
 
 app.get("/healthz", (_request, response) => {
   response.json({
@@ -254,6 +259,9 @@ app.post("/api/auth/login", (request, response) => {
     deviceId,
     sessionId: crypto.randomUUID()
   }, sessionSecret);
+
+  void activityStore.record(user.username, { deviceId: deviceId || "legacy", userAgent: request.get("user-agent"), login: true })
+    .catch(() => console.warn("Activity login could not be recorded; check MongoDB availability."));
 
   response.json({
     token,
