@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Family activity · Impala</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    main { max-width: 1200px; margin: 3rem auto; padding: 1rem; }
+    .table-scroll { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; text-align: left; }
+    th, td { padding: .8rem; border-bottom: 1px solid #8886; vertical-align: top; }
+    th { white-space: nowrap; } small { display: block; } summary { cursor: pointer; }
+  </style>
+</head>
+<body>
+  <main>
+    <a href="index.html">Back to player</a>
+    <h1>Family activity</h1>
+    <p>Review inactive invitees and accounts to follow up with. Device counts cover the last 30 days (up to 32 browser identities). Overlap means different devices checked in within four minutes.</p>
+    <p>Tracking begins with this update. “No activity recorded” does not describe earlier use. Clearing browser data can create a new device identity.</p>
+    <button id="refresh" type="button">Refresh</button>
+    <p id="status" role="status"></p>
+    <div class="table-scroll">
+      <table hidden id="activity-table">
+        <caption>Current allowed users</caption>
+        <thead><tr><th>User</th><th>Last login</th><th>Last active</th><th>Logins</th><th>Recent devices</th><th>Follow-up</th></tr></thead>
+        <tbody id="activity-rows"></tbody>
+      </table>
+    </div>
+  </main>
+  <script src="app-config.js"></script>
+  <script src="ui-preferences.js"></script>
+  <script src="auth-session.js"></script>
+  <script src="api-client.js"></script>
+  <script src="activity-admin.js"></script>
+</body>
+</html>
