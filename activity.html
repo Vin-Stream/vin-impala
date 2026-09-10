@@ -11,11 +11,26 @@
     table { width: 100%; border-collapse: collapse; text-align: left; }
     th, td { padding: .8rem; border-bottom: 1px solid #8886; vertical-align: top; }
     th { white-space: nowrap; } small { display: block; } summary { cursor: pointer; }
+    .back-button {
+      display: inline-block;
+      margin-bottom: 1rem;
+      padding: 0.5rem 1rem;
+      border: 1px solid rgba(255, 195, 111, 0.32);
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(255, 195, 111, 0.3), rgba(255, 126, 103, 0.25));
+      color: #fff8ef;
+      font: inherit;
+      font-weight: 700;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    
   </style>
 </head>
 <body>
   <main>
-    <a href="index.html">Back to player</a>
+    <a href="index.html" class="back-button">Back to player</a>
     <h1>Family activity</h1>
     <p>Review inactive invitees and accounts to follow up with. Device counts cover the last 30 days (up to 32 browser identities). Overlap means different devices checked in within four minutes.</p>
     <p>Tracking begins with this update. “No activity recorded” does not describe earlier use. Clearing browser data can create a new device identity.</p>
