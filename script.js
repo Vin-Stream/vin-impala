@@ -139,6 +139,10 @@ document.addEventListener("DOMContentLoaded", () => {
   let activeMediaUrl = "";
   let lastPlayerError = "";
   let mediaLoadStartedAt = 0;
+  let mediaLoadGeneration = 0;
+  let mediaLoading = false;
+  let mediaSourceReady = false;
+  let playWhenReady = false;
   let activeMediaDebug = {};
   let ambientIdentityController = null;
   let mediaSessionController = null;
@@ -1221,6 +1225,10 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+    const loadGeneration = ++mediaLoadGeneration;
+    mediaLoading = true;
+    mediaSourceReady = false;
+    playWhenReady = autoPlay;
     livePlaybackController.deactivate(false);
     snapshotCurrentVideoPosition();
     currentSongIndex = index;
@@ -1252,6 +1260,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       const resolvedMedia = options.preparedMedia || await resolveMediaUrl(song);
+      if (loadGeneration !== mediaLoadGeneration) return;
       activeMediaSource = resolvedMedia.source;
       activeMediaUrl = resolvedMedia.url;
       activeMediaDebug.resolvedPath = resolvedMedia.url;
@@ -1269,6 +1278,8 @@ document.addEventListener("DOMContentLoaded", () => {
       activeMediaElement.removeAttribute("src");
       activeMediaElement.src = resolvedMedia.url;
       activeMediaElement.load();
+      mediaLoading = false;
+      mediaSourceReady = true;
 
       const savedResumePosition = options.useSavedPosition ? getSavedPlaybackPosition(song) : 0;
       const resumePosition = Number(options.resumePosition || savedResumePosition || 0);
@@ -1287,10 +1298,11 @@ document.addEventListener("DOMContentLoaded", () => {
         activeMediaElement.currentTime = 0;
       }
 
-      if (autoPlay) {
+      if (playWhenReady) {
         try {
           await activeMediaElement.play();
         } catch (primaryPlayError) {
+          if (loadGeneration !== mediaLoadGeneration) return;
           // Keep audio playback audio-only so the video surface does not appear for music.
           const allowFallback = false;
           if (!fallbackMediaElement || !allowFallback) {
@@ -1320,6 +1332,7 @@ document.addEventListener("DOMContentLoaded", () => {
         persistPlayerState("paused");
       }
 
+      if (loadGeneration !== mediaLoadGeneration) return;
       setMediaMode(activeMediaElement === videoPlayer ? "video" : "audio");
       enforceExclusivePlayback(activeMediaElement);
       errorRetryCount = 0;
@@ -1327,14 +1340,19 @@ document.addEventListener("DOMContentLoaded", () => {
       renderTrackList();
       prepareUpcomingTrack();
     } catch (error) {
+      if (loadGeneration !== mediaLoadGeneration) return;
+      mediaLoading = false;
       console.error("Error playing song:", error);
       lastPlayerError = getFriendlyPlaybackMessage(error);
       activeMediaDebug.loadTimeMs = Math.round(performance.now() - mediaLoadStartedAt);
-      activeMediaSource = "unknown";
-      activeMediaUrl = "";
-      updateDisplayText("Playback Error");
+      const needsUserPlay = error?.name === "AbortError" || error?.name === "NotAllowedError";
+      if (!needsUserPlay) {
+        activeMediaSource = "unknown";
+        activeMediaUrl = "";
+      }
+      updateDisplayText(needsUserPlay ? "Click Play" : "Playback Error");
       persistPlayerState("paused");
-      updateAuthUi(getFriendlyPlaybackMessage(error));
+      if (!needsUserPlay) updateAuthUi(getFriendlyPlaybackMessage(error));
       publishDiagnostics();
     }
   }
@@ -1460,6 +1478,13 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!active || activeObjectKey !== getSongIdentity(song)) {
       return playSong(currentSongIndex, true, { useSavedPosition: true });
     }
+    if (!mediaSourceReady) {
+      if (mediaLoading) {
+        playWhenReady = true;
+        return;
+      }
+      return playSong(currentSongIndex, true, { useSavedPosition: true });
+    }
     return active.play();
   }
 
@@ -1538,6 +1563,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const active = getActiveMediaElement();
 
+        if (!mediaSourceReady) {
+          if (mediaLoading) {
+            playWhenReady = true;
+            updateDisplayText("Loading");
+          } else {
+            playSong(currentSongIndex, true);
+          }
+          break;
+        }
+
         if (active && !active.paused) {
           // currently playing → pause
           stopAllMediaPlayback();
@@ -1548,7 +1583,11 @@ document.addEventListener("DOMContentLoaded", () => {
           } else {
             active.play().catch((error) => {
               console.error("Error playing song:", error);
-              updateAuthUi(getFriendlyPlaybackMessage(error));
+              if (error?.name === "AbortError" || error?.name === "NotAllowedError") {
+                updateDisplayText("Click Play");
+              } else {
+                updateAuthUi(getFriendlyPlaybackMessage(error));
+              }
             });
           }
         }
@@ -1665,6 +1704,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     mediaElement.addEventListener("play", () => {
+      lastPlayerError = "";
+      updateAuthUi();
       enforceExclusivePlayback(mediaElement);
       setMediaMode(mediaElement === videoPlayer ? "video" : "audio");
       updateDisplayText("Playing");
@@ -1743,6 +1784,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     mediaElement.addEventListener("error", () => {
+      if (!mediaElement.getAttribute("src") || mediaElement !== getActiveMediaElement()) return;
       if (isLivePlaybackActive()) {
         const mediaError = mediaElement.error;
         const errorCode = mediaError?.code || 0;
@@ -1775,6 +1817,16 @@ document.addEventListener("DOMContentLoaded", () => {
         4: "The signed media URL did not return playable media."
       };
       const message = messageMap[errorCode] || "Unable to load media.";
+
+      if (mediaElement === audioPlayer) mediaSourceReady = false;
+
+      if (mediaElement === audioPlayer && errorCode === 1) {
+        lastPlayerError = "";
+        updateDisplayText("Click Play");
+        persistPlayerState("paused");
+        publishDiagnostics();
+        return;
+      }
 
       const retryPosition = Math.max(
         mediaElement.currentTime || 0,

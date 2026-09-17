@@ -2,6 +2,8 @@
   const panel = document.getElementById("media-metadata");
   const artwork = document.getElementById("player-medallion");
   const video = document.getElementById("videoPlayer");
+  const videoArtworkPanel = document.getElementById("video-artwork-panel");
+  const videoArtwork = document.getElementById("video-artwork");
   const fields = {
     kicker: document.getElementById("media-metadata-kicker"),
     title: document.getElementById("media-metadata-title"),
@@ -39,8 +41,14 @@
       artwork.src = metadata.artworkUrl;
       artwork.alt = `${metadata.title || "Media"} artwork`;
     }
-    if (metadata.kind === "movie" && metadata.posterUrl && video) {
-      video.poster = metadata.posterUrl;
+    if (metadata.kind === "movie" && videoArtwork && videoArtworkPanel) {
+      const posterUrl = metadata.posterUrl || metadata.artworkUrl;
+      if (posterUrl) {
+        videoArtwork.src = posterUrl;
+        videoArtwork.alt = `${metadata.title || "Video"} poster`;
+        videoArtworkPanel.hidden = false;
+        document.body.classList.add("has-video-artwork");
+      }
     }
     if (panel) panel.hidden = false;
   }
@@ -75,6 +83,10 @@
     activeKey = key;
     const currentRequest = ++requestId;
     if (panel) panel.hidden = true;
+    if (videoArtworkPanel) videoArtworkPanel.hidden = true;
+    if (videoArtwork) videoArtwork.removeAttribute("src");
+    document.body.classList.remove("has-video-artwork");
+    video?.removeAttribute("poster");
     if (ownerArtworkUrl && artwork) {
       artwork.src = ownerArtworkUrl;
       artwork.alt = "Impala Streamer artwork";
