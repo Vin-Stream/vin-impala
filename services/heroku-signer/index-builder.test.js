@@ -14,6 +14,7 @@ test("builds an NDJSON index from media objects and ignores other files", async 
               Size: 123,
               LastModified: new Date("2026-06-19T12:00:00Z")
             },
+            { Key: "Artist/Album/02 Second Song.opus", Size: 234 },
             { Key: "Artist/Album/cover.jpg", Size: 456 }
           ],
           IsTruncated: false
@@ -39,9 +40,9 @@ test("builds an NDJSON index from media objects and ignores other files", async 
     }
   });
 
-  assert.equal(result.records, 1);
+  assert.equal(result.records, 2);
   assert.equal(result.etag, '"index-version"');
-  assert.deepEqual(JSON.parse(uploadedBody.trim()), {
+  assert.deepEqual(uploadedBody.trim().split("\n").map(JSON.parse), [{
     objectKey: "Artist/Album/01 First Song.mp3",
     artist: "Artist",
     album: "Album",
@@ -49,7 +50,15 @@ test("builds an NDJSON index from media objects and ignores other files", async 
     type: "audio",
     size: 123,
     modified: "2026-06-19T12:00:00.000Z"
-  });
+  }, {
+    objectKey: "Artist/Album/02 Second Song.opus",
+    artist: "Artist",
+    album: "Album",
+    title: "Second Song",
+    type: "audio",
+    size: 234,
+    modified: null
+  }]);
 });
 
 test("counts video title folders once during index build", async () => {

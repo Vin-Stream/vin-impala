@@ -36,6 +36,12 @@ test("classifies MKV files as Matroska video", () => {
   );
 });
 
+test("classifies Opus files as audio with an Ogg Opus MIME candidate", () => {
+  const mediaInfo = loadResolver().getMediaInfo({ objectKey: "Albums/Track.opus" });
+  assert.equal(mediaInfo.mediaKind, "audio");
+  assert.equal(mediaInfo.preferredMimeType, "audio/ogg; codecs=opus");
+});
+
 test("prepares a local MKV through the Companion and reports progress", async () => {
   const requests = [];
   const responses = [

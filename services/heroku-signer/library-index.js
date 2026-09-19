@@ -1,7 +1,7 @@
 import readline from "node:readline";
 import { GetObjectCommand, HeadObjectCommand } from "@aws-sdk/client-s3";
 
-const MEDIA_EXTENSION_PATTERN = /\.(flac|mp3|m4a|mp4|m4v|wav|ogg|aac|webm|mov)$/i;
+const MEDIA_EXTENSION_PATTERN = /\.(flac|mp3|m4a|mp4|m4v|wav|ogg|opus|aac|webm|mov)$/i;
 
 export function createLibraryIndexCache({
   s3Client,

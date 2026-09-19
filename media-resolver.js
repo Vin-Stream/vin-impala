@@ -272,6 +272,8 @@
         return ["audio/wav", "audio/wave"];
       case "ogg":
         return ["audio/ogg"];
+      case "opus":
+        return ["audio/ogg; codecs=opus", "audio/opus"];
       case "aac":
         return ["audio/aac"];
       default:

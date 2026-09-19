@@ -1012,7 +1012,7 @@ async function searchLibraryEntries({
 }
 
 function isAudioObjectKey(objectKey) {
-  return /\.(flac|mp3|m4a|mp4|m4v|wav|ogg|aac|webm|mov)$/i.test(String(objectKey || ""));
+  return /\.(flac|mp3|m4a|mp4|m4v|wav|ogg|opus|aac|webm|mov)$/i.test(String(objectKey || ""));
 }
 
 function verifyPassword(password, encodedHash) {
