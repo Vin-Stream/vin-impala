@@ -14,7 +14,7 @@ window.KW_PLAYER_CONFIG = window.KW_PLAYER_CONFIG || {
   builtInPlaylistsEnabled: true,
   enabledBuiltInPlaylistIds: ["songs"],
   brandName: "Impala Streamer",
-  editionName: "Impala Streamer (Vin Edition)",
+  editionName: "Vinnie's Streamer",
   appVersion: "1.2.0",
   appBuildDate: "2026.08.13",
   mkvPlaybackEnabled: true,
