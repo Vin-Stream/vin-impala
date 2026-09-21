@@ -1,5 +1,5 @@
 window.KW_PLAYER_CONFIG = window.KW_PLAYER_CONFIG || {
-  apiBaseUrl: "https://family-impala-signer-8e42c2936753.herokuapp.com",
+  apiBaseUrl: "https://vin-impala-signer-36d6ffefaed5.herokuapp.com/",
   liveStreamApiBaseUrl: "https://family-impala-live-248de01b2798.herokuapp.com",
   localLiveStreamApiBaseUrl:
     "https://family-impala-live-248de01b2798.herokuapp.com",
@@ -8,13 +8,13 @@ window.KW_PLAYER_CONFIG = window.KW_PLAYER_CONFIG || {
   // Public, read-only metadata sidecar; private playback remains on Family services.
   metadataApiUrl:
     "https://family-impala-metadata-93d758b55ecd.herokuapp.com/api/metadata",
-  authStorageKey: "impalaFamily.authSession",
-  playlistStoragePrefix: "impalaFamily",
+  authStorageKey: "vinImpala.authSession",
+  playlistStoragePrefix: "vinImpala",
   instanceStorageId: "",
   builtInPlaylistsEnabled: true,
   enabledBuiltInPlaylistIds: ["songs"],
   brandName: "Impala Streamer",
-  editionName: "Impala Family Streamer",
+  editionName: "Vinnie's Streamer",
   appVersion: "1.2.0",
   appBuildDate: "2026.08.13",
   mkvPlaybackEnabled: true,
