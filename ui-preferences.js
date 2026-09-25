@@ -154,7 +154,7 @@
     localHelperEnabled: false,
     localHelperRoot: "",
     localHelperPort: "8089",
-    metadataEnabled: false,
+    metadataEnabled: true,
     skipTailSilenceEnabled: false,
     liveStreamEnabled: false,
     syncPlayEnabled: false,
